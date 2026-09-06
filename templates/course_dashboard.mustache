@@ -1,0 +1,341 @@
+<div class="local-tla-dashboard">
+    <div class="mb-4">
+        <h2>{{#str}} dashboardtitle, local_tla {{/str}}</h2>
+        <p class="text-muted mb-3">{{coursefullname}}: {{periodstart}} – {{periodend}}</p>
+
+        <div class="btn-group" role="group" aria-label="{{#str}} periodselection, local_tla {{/str}}">
+            {{#periodoptions}}
+                <a
+                    href="{{url}}"
+                    class="btn {{#active}}btn-primary{{/active}}{{^active}}btn-outline-secondary{{/active}}"
+                    {{#active}}aria-current="page"{{/active}}
+                >
+                    {{label}}
+                </a>
+            {{/periodoptions}}
+        </div>
+    </div>
+
+    <p><a href="{{assessmentdesignurl}}">{{#str}} ad_standalone, local_tla {{/str}}</a></p>
+    {{#assessmentdesign}}{{> local_tla/assessment_design}}{{/assessmentdesign}}
+
+    <div class="row">
+        <div class="col-sm-6 col-xl-3 mb-3"><div class="card h-100"><div class="card-body">
+            <div class="text-muted">{{#str}} totalevents, local_tla {{/str}}</div>
+            <div class="h2 mb-0">{{totalevents}}</div>
+        </div></div></div>
+
+        <div class="col-sm-6 col-xl-3 mb-3"><div class="card h-100"><div class="card-body">
+            <div class="text-muted">{{#str}} peakactiveusers, local_tla {{/str}}</div>
+            <div class="h2 mb-0">{{peakactiveusers}}</div>
+        </div></div></div>
+
+        <div class="col-sm-6 col-xl-3 mb-3"><div class="card h-100"><div class="card-body">
+            <div class="text-muted">{{#str}} moduleevents, local_tla {{/str}}</div>
+            <div class="h2 mb-0">{{moduleeventtotal}}</div>
+        </div></div></div>
+
+        <div class="col-sm-6 col-xl-3 mb-3"><div class="card h-100"><div class="card-body">
+            <div class="text-muted">{{#str}} submittedassignments, local_tla {{/str}}</div>
+            <div class="h2 mb-0">{{submitted}}</div>
+        </div></div></div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header"><h3 class="h5 mb-0">{{#str}} assignmentsummary, local_tla {{/str}}</h3></div>
+        <div class="card-body">
+            <div class="row text-center">
+                <div class="col-6 col-md-3"><div class="text-muted">{{#str}} submittedassignments, local_tla {{/str}}</div><strong>{{submitted}}</strong></div>
+                <div class="col-6 col-md-3"><div class="text-muted">{{#str}} ontime, local_tla {{/str}}</div><strong>{{ontime}}</strong></div>
+                <div class="col-6 col-md-3"><div class="text-muted">{{#str}} late, local_tla {{/str}}</div><strong>{{late}}</strong></div>
+                <div class="col-6 col-md-3"><div class="text-muted">{{#str}} noduedate, local_tla {{/str}}</div><strong>{{noduedate}}</strong></div>
+            </div>
+            <hr>
+            <p class="small text-muted mb-2">{{#str}} effectivedeadlinesconsidered, local_tla {{/str}}</p>
+            <div class="row text-center small">
+                <div class="col-4"><div class="text-muted">{{#str}} extensionsapplied, local_tla {{/str}}</div><strong>{{extended}}</strong></div>
+                <div class="col-4"><div class="text-muted">{{#str}} useroverrides, local_tla {{/str}}</div><strong>{{useroverride}}</strong></div>
+                <div class="col-4"><div class="text-muted">{{#str}} groupoverrides, local_tla {{/str}}</div><strong>{{groupoverride}}</strong></div>
+            </div>
+            {{#unresolved}}
+            <p class="small text-muted mt-2 mb-0">{{#str}} unresolveddeadlines, local_tla {{/str}}: <strong>{{unresolved}}</strong></p>
+            {{/unresolved}}
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3 class="h5 mb-0">{{#str}} lateindicator, local_tla {{/str}}</h3>
+        </div>
+        <div class="card-body">
+            <p class="mb-2">
+                <span class="badge {{trafficlightclass}}">{{trafficlightlabel}}</span>
+            </p>
+
+            {{#hastrafficlightpercentage}}
+                <p class="mb-1">
+                    {{#str}} laterate, local_tla {{/str}}:
+                    <strong>{{trafficlightpercentage}}%</strong>
+                    ({{trafficlightnumerator}} / {{trafficlightdenominator}})
+                </p>
+            {{/hastrafficlightpercentage}}
+
+            {{^hastrafficlightpercentage}}
+                <p class="mb-1 text-muted">
+                    {{#str}} norateavailable, local_tla {{/str}}
+                </p>
+            {{/hastrafficlightpercentage}}
+
+            <small class="text-muted">
+                {{#str}} trafficlightminimum, local_tla, {{minobservations}} {{/str}}
+            </small>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header"><h3 class="h5 mb-0">{{#str}} eventsperday, local_tla {{/str}}</h3></div>
+                <div class="card-body p-0">
+                    {{#haseventsperday}}
+                    <div class="p-3">{{{eventchart}}}</div>
+                    <div class="table-responsive"><table class="table table-striped mb-0">
+                        <thead><tr><th>{{#str}} date {{/str}}</th><th class="text-end">{{#str}} events, local_tla {{/str}}</th></tr></thead>
+                        <tbody>{{#eventsperday}}<tr><td>{{date}}</td><td class="text-end">{{eventcount}}</td></tr>{{/eventsperday}}</tbody>
+                    </table></div>
+                    {{/haseventsperday}}
+                    {{^haseventsperday}}<p class="p-3 mb-0 text-muted">{{#str}} nodata, local_tla {{/str}}</p>{{/haseventsperday}}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header"><h3 class="h5 mb-0">{{#str}} activeusersperday, local_tla {{/str}}</h3></div>
+                <div class="card-body p-0">
+                    {{#hasactiveusersperday}}
+                    <div class="p-3">{{{activeuserchart}}}</div>
+                    <div class="table-responsive"><table class="table table-striped mb-0">
+                        <thead><tr><th>{{#str}} date {{/str}}</th><th class="text-end">{{#str}} activeusers, local_tla {{/str}}</th></tr></thead>
+                        <tbody>{{#activeusersperday}}<tr><td>{{date}}</td><td class="text-end">{{activeusers}}</td></tr>{{/activeusersperday}}</tbody>
+                    </table></div>
+                    {{/hasactiveusersperday}}
+                    {{^hasactiveusersperday}}<p class="p-3 mb-0 text-muted">{{#str}} nodata, local_tla {{/str}}</p>{{/hasactiveusersperday}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header"><h3 class="h5 mb-0">{{#str}} moduleusage, local_tla {{/str}}</h3></div>
+        <div class="card-body p-0">
+            {{#hasmoduleevents}}
+            <div class="table-responsive"><table class="table table-striped mb-0">
+                <thead><tr><th>{{#str}} component, local_tla {{/str}}</th><th class="text-end">{{#str}} events, local_tla {{/str}}</th></tr></thead>
+                <tbody>
+                    {{#moduleevents}}
+                        <tr>
+                            <td>
+                                <div>{{displayname}}</div>
+                                <small class="text-muted"><code>{{component}}</code></small>
+                            </td>
+                            <td class="text-end">{{eventcount}}</td>
+                        </tr>
+                    {{/moduleevents}}
+                </tbody>
+            </table></div>
+            {{/hasmoduleevents}}
+            {{^hasmoduleevents}}<p class="p-3 mb-0 text-muted">{{#str}} nodata, local_tla {{/str}}</p>{{/hasmoduleevents}}
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h3 class="h5 mb-0">{{#str}} scoredistributions, local_tla {{/str}}</h3>
+            {{#scoredistributionstruncated}}
+                <small class="text-muted">{{#str}} scoredistributionstruncated, local_tla, {"shown": {{scoredistributionsshowncount}}, "total": {{scoredistributionstotal}}} {{/str}}</small>
+            {{/scoredistributionstruncated}}
+        </div>
+        <div class="card-body">
+            {{^hasscoredistributions}}<p class="mb-0 text-muted">{{#str}} emptynomatchingactivities, local_tla {{/str}}</p>{{/hasscoredistributions}}
+            {{#scoredistributions}}
+                <div class="border rounded p-3 mb-3">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                            <strong>{{name}}</strong>
+                            <span class="text-muted">({{moduletype}})</span>
+                        </div>
+                        <span class="badge {{severityclass}}">{{statuslabel}}</span>
+                    </div>
+
+                    {{#analyzed}}
+                    <div class="row text-center small mb-2">
+                        <div class="col"><div class="text-muted">{{#str}} scorevalidgrades, local_tla {{/str}}</div><strong>{{validgrades}}</strong></div>
+                        <div class="col"><div class="text-muted">{{#str}} scoremedian, local_tla {{/str}}</div><strong>{{median}}%</strong></div>
+                        <div class="col"><div class="text-muted">{{#str}} scorequartiles, local_tla {{/str}}</div><strong>{{q1}}–{{q3}}%</strong></div>
+                        <div class="col"><div class="text-muted">{{#str}} scorelow, local_tla {{/str}}</div><strong>{{lowshare}}%</strong></div>
+                        <div class="col"><div class="text-muted">{{#str}} scoremiddle, local_tla {{/str}}</div><strong>{{middleshare}}%</strong></div>
+                        <div class="col"><div class="text-muted">{{#str}} scorehigh, local_tla {{/str}}</div><strong>{{highshare}}%</strong></div>
+                    </div>
+
+                    <div class="mb-2">
+                        {{#histogram}}
+                        <div class="d-flex align-items-center mb-1">
+                            <span class="text-muted small" style="width:4.5rem;">{{from}}–{{to}}%</span>
+                            <div class="flex-grow-1 bg-light rounded" style="height:1rem;">
+                                <div class="bg-primary rounded" style="height:1rem; width:{{barwidth}}%;"></div>
+                            </div>
+                            <span class="text-muted small text-end" style="width:2.5rem;">{{count}}</span>
+                        </div>
+                        {{/histogram}}
+                    </div>
+                    {{/analyzed}}
+
+                    <p class="small text-muted mb-0">{{explanation}}</p>
+                    {{#recommendation}}<p class="small mt-2 mb-0">{{recommendation}}</p>{{/recommendation}}
+                    {{#hasinvalidgrades}}
+                        <p class="small text-muted mb-0">{{#str}} scoreinvalidgrades, local_tla, {{invalidgrades}} {{/str}}</p>
+                    {{/hasinvalidgrades}}
+                </div>
+            {{/scoredistributions}}
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h3 class="h5 mb-0">{{#str}} learningprogress, local_tla {{/str}}</h3>
+            {{#quizprogresstruncated}}
+                <small class="text-muted">{{#str}} progresstruncated, local_tla, {"shown": {{quizprogressshowncount}}, "total": {{quizprogresstotal}}} {{/str}}</small>
+            {{/quizprogresstruncated}}
+        </div>
+        <div class="card-body">
+            {{#hascourseprogress}}
+                <div class="border rounded p-3 mb-3">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <strong>{{#str}} courseprogresstitle, local_tla {{/str}}</strong>
+                        <span class="badge {{courseprogress.severityclass}}">{{courseprogress.statuslabel}}</span>
+                    </div>
+                    <div class="row text-center small mb-2">
+                        <div class="col"><div class="text-muted">{{#str}} progressactivities, local_tla {{/str}}</div><strong>{{courseprogress.activities}}</strong></div>
+                        <div class="col"><div class="text-muted">{{#str}} progressparticipants, local_tla {{/str}}</div><strong>{{courseprogress.participants}}</strong></div>
+                        <div class="col"><div class="text-muted">{{#str}} progressmedianchange, local_tla {{/str}}</div><strong>{{courseprogress.medianchange}}</strong></div>
+                        <div class="col"><div class="text-muted">{{#str}} progressimproved, local_tla {{/str}}</div><strong>{{courseprogress.improvedshare}}%</strong></div>
+                        <div class="col"><div class="text-muted">{{#str}} progressstable, local_tla {{/str}}</div><strong>{{courseprogress.stableshare}}%</strong></div>
+                        <div class="col"><div class="text-muted">{{#str}} progressdeclined, local_tla {{/str}}</div><strong>{{courseprogress.declinedshare}}%</strong></div>
+                    </div>
+                    <p class="small text-muted mb-1">{{#str}} courseprogressexpl, local_tla {{/str}}</p>
+                    <p class="small text-warning mb-0">{{#str}} courseprogresswarning, local_tla {{/str}}</p>
+                </div>
+            {{/hascourseprogress}}
+            {{^hascourseprogress}}
+                {{#courseprogress.hasactivities}}<p class="small text-muted mb-2">{{#str}} courseprogresstitle, local_tla {{/str}}: {{#str}} emptynotenoughobservations, local_tla {{/str}}</p>{{/courseprogress.hasactivities}}
+                {{^courseprogress.hasactivities}}<p class="small text-muted mb-2">{{#str}} courseprogresstitle, local_tla {{/str}}: {{#str}} emptynomatchingactivities, local_tla {{/str}}</p>{{/courseprogress.hasactivities}}
+            {{/hascourseprogress}}
+
+            {{^hasquizprogress}}<p class="mb-0 text-muted">{{#str}} emptynoquizattempts, local_tla {{/str}}</p>{{/hasquizprogress}}
+            {{#quizprogress}}
+                <div class="border rounded p-3 mb-3">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                            <strong>{{name}}</strong>
+                            <span class="text-muted">({{#str}} pluginname, mod_quiz {{/str}})</span>
+                        </div>
+                        <span class="badge {{severityclass}}">{{statuslabel}}</span>
+                    </div>
+                    {{#analyzed}}
+                    <div class="row text-center small mb-2">
+                        <div class="col"><div class="text-muted">{{#str}} progressparticipants, local_tla {{/str}}</div><strong>{{participants}}</strong></div>
+                        <div class="col"><div class="text-muted">{{#str}} progressmeanfirst, local_tla {{/str}}</div><strong>{{meanfirst}}%</strong></div>
+                        <div class="col"><div class="text-muted">{{#str}} progressmeanlast, local_tla {{/str}}</div><strong>{{meanlast}}%</strong></div>
+                        <div class="col"><div class="text-muted">{{#str}} progressmeanbest, local_tla {{/str}}</div><strong>{{meanbest}}%</strong></div>
+                        <div class="col"><div class="text-muted">{{#str}} progressmedianchange, local_tla {{/str}}</div><strong>{{medianchange}}</strong></div>
+                        <div class="col"><div class="text-muted">{{#str}} progressmeanattempts, local_tla {{/str}}</div><strong>{{meanattempts}}</strong></div>
+                    </div>
+                    <div class="row text-center small mb-2">
+                        <div class="col"><div class="text-muted">{{#str}} progressimproved, local_tla {{/str}}</div><strong>{{improvedshare}}%</strong></div>
+                        <div class="col"><div class="text-muted">{{#str}} progressstable, local_tla {{/str}}</div><strong>{{stableshare}}%</strong></div>
+                        <div class="col"><div class="text-muted">{{#str}} progressdeclined, local_tla {{/str}}</div><strong>{{declinedshare}}%</strong></div>
+                    </div>
+                    {{/analyzed}}
+                    <p class="small text-muted mb-0">{{explanation}}</p>
+                </div>
+            {{/quizprogress}}
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h3 class="h5 mb-0">{{#str}} doseresponse, local_tla {{/str}} {{{doseresponse.help}}}</h3>
+            <span class="badge {{doseresponse.severityclass}}">{{doseresponse.statuslabel}}</span>
+        </div>
+        <div class="card-body">
+            <p class="small text-muted mb-3">{{#str}} doseresponseintro, local_tla {{/str}}</p>
+
+            {{^hasdoseresponse}}
+                <p class="mb-0 text-muted">{{#str}} doseresponseempty, local_tla {{/str}}</p>
+            {{/hasdoseresponse}}
+
+            {{#hasdoseresponse}}
+                <div class="local-tla-chart mb-2">{{{doseresponse.chart}}}</div>
+                <p class="small text-muted mb-3">{{#str}} doseresponsebandnote, local_tla {{/str}}</p>
+
+                {{#doseresponse.hascurvedata}}
+                <details class="mb-3" open>
+                    <summary class="small text-muted">{{#str}} doseresponsedata, local_tla {{/str}}</summary>
+                    <div class="table-responsive mt-2">
+                        <table class="table table-sm table-striped mb-0">
+                            <thead>
+                                <tr>
+                                    <th>{{#str}} doseresponseaxisx, local_tla {{/str}}</th>
+                                    <th class="text-end">{{#str}} doseresponseobserved, local_tla {{/str}}</th>
+                                    <th class="text-end">{{#str}} doseresponsemedianline, local_tla {{/str}}</th>
+                                    <th class="text-end">{{#str}} doseresponseband, local_tla {{/str}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#doseresponse.curvedata}}
+                                <tr>
+                                    <td>{{c}}</td>
+                                    <td class="text-end">{{#observed}}{{observed}}%{{/observed}}{{^observed}}&ndash;{{/observed}}</td>
+                                    <td class="text-end">{{median}}%</td>
+                                    <td class="text-end">{{lo}}&ndash;{{hi}}%</td>
+                                </tr>
+                                {{/doseresponse.curvedata}}
+                            </tbody>
+                        </table>
+                    </div>
+                </details>
+                {{/doseresponse.hascurvedata}}
+
+                <table class="table table-sm mb-2">
+                    <thead>
+                        <tr>
+                            <th class="fw-normal text-muted">{{#str}} doseresponsecredible, local_tla {{/str}}</th>
+                            <th class="text-end fw-normal text-muted">{{#str}} doseresponseemax, local_tla {{/str}}</th>
+                            <th class="text-end fw-normal text-muted">{{#str}} doseresponseec50, local_tla {{/str}}</th>
+                            <th class="text-end fw-normal text-muted">{{#str}} doseresponsesigma, local_tla {{/str}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-muted small">{{#str}} doseresponsemedianline, local_tla {{/str}}</td>
+                            <td class="text-end"><strong>{{doseresponse.emaxmedian}}%</strong> <span class="text-muted small">({{doseresponse.emaxlo}}–{{doseresponse.emaxhi}})</span></td>
+                            <td class="text-end"><strong>{{doseresponse.ec50median}}</strong> <span class="text-muted small">({{doseresponse.ec50lo}}–{{doseresponse.ec50hi}})</span></td>
+                            <td class="text-end"><strong>{{doseresponse.sigmamedian}}</strong> <span class="text-muted small">({{doseresponse.sigmalo}}–{{doseresponse.sigmahi}})</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row text-center small mb-2">
+                    <div class="col"><div class="text-muted">{{#str}} doseresponseobservations, local_tla {{/str}}</div><strong>{{doseresponse.observations}}</strong></div>
+                    <div class="col"><div class="text-muted">{{#str}} doseresponsequizzes, local_tla {{/str}}</div><strong>{{doseresponse.quizzes}}</strong></div>
+                    <div class="col"><div class="text-muted">{{#str}} doseresponseexplained, local_tla {{/str}}</div><strong>{{doseresponse.explained}}%</strong></div>
+                </div>
+                {{#doseresponse.ppcdetail}}
+                    <p class="small text-muted mb-1">{{#str}} doseresponseppc, local_tla {{/str}}: {{doseresponse.ppcdetail}}</p>
+                {{/doseresponse.ppcdetail}}
+                <p class="small text-muted mb-1">{{doseresponse.explanation}}</p>
+                <p class="small text-warning mb-0">{{#str}} doseresponsewarning, local_tla {{/str}}</p>
+            {{/hasdoseresponse}}
+        </div>
+    </div>
+</div>

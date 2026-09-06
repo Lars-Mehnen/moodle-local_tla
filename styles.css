@@ -1,0 +1,39 @@
+/* Moodle core sizes chart canvases with viewport units on large screens
+ * (.chart-area .chart-image { height: 48vh; width: 46vw }). That oversizes the
+ * dashboard charts, overflows their cards and lets following text slide under
+ * the canvas. Size charts to their container with a fixed, reserved height
+ * instead. Chart.js runs with maintainAspectRatio:false, so it fills this box
+ * exactly, and the reserved height keeps captions and tables below the chart. */
+.local-tla-dashboard .chart-area .chart-image {
+    width: 100%;
+    height: 320px;
+    margin: 0;
+}
+
+/* Each dashboard card already renders its own visible data table, so hide
+ * Moodle's built-in "Show chart data" duplicate. Left visible it expanded on
+ * top of the text following the chart. */
+.local-tla-dashboard .chart-table {
+    display: none;
+}
+
+/* The dose-response chart is centred and width-bounded; the reserved image
+ * height above guarantees the caption and data table flow below it. */
+.local-tla-dashboard .local-tla-chart {
+    max-width: 720px;
+    margin: 0 auto 1.5rem;
+}
+
+/* Configuration cards are informational and keyboard-operable, without quality colours. */
+#tla-assessment-design summary {
+    cursor: pointer;
+    overflow-wrap: anywhere;
+}
+#tla-assessment-design summary:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+}
+#tla-assessment-design dd,
+#tla-assessment-design p {
+    overflow-wrap: anywhere;
+}

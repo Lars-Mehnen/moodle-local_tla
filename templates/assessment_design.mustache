@@ -1,0 +1,48 @@
+{{!
+    @template local_tla/assessment_design
+    Configuration-only findings, no student rows or quality colour coding.
+}}
+<section id="tla-assessment-design" class="card mb-4" aria-labelledby="tla-assessment-heading">
+    <div class="card-header">
+        <h3 id="tla-assessment-heading" class="h5 mb-0">{{#str}} ad_title, local_tla {{/str}}</h3>
+    </div>
+    <div class="card-body">
+        <p>{{#str}} ad_intro, local_tla {{/str}}</p>
+        <p class="small text-muted">{{snapshotlabel}}</p>
+        <details class="border rounded p-3 mb-3">
+            <summary>{{#str}} ad_limits_title, local_tla {{/str}}</summary>
+            <p class="mt-2 mb-0">{{#str}} ad_limits, local_tla {{/str}}</p>
+        </details>
+        {{^hasactivities}}<p class="mb-0">{{#str}} ad_empty, local_tla {{/str}}</p>{{/hasactivities}}
+        {{#hasactivities}}<p class="small text-muted">{{pageinfo}}</p>{{/hasactivities}}
+        {{#activities}}
+            <details class="border rounded p-3 mb-3">
+                <summary>
+                    <strong>{{name}}</strong> <span class="text-muted">({{moduletype}})</span>
+                    <span class="small text-muted"> &mdash; {{rulecount}}</span>
+                    {{#hidden}}<span class="small text-muted"> &mdash; {{#str}} ad_hidden, local_tla {{/str}}</span>{{/hidden}}
+                </summary>
+                <p class="mt-2"><a href="{{viewurl}}">{{#str}} ad_activitylink, local_tla {{/str}}</a></p>
+                <h4 class="h6">{{#str}} ad_currentsettings, local_tla {{/str}}</h4>
+                <dl class="row small">
+                    {{#settings}}
+                        <dt class="col-md-6">{{label}}</dt><dd class="col-md-6">{{value}}</dd>
+                    {{/settings}}
+                </dl>
+                {{#findings}}
+                    <div class="border-top py-3">
+                        <h4 class="h6 mb-1">{{criterion}} &mdash; {{statuslabel}}</h4>
+                        <p class="mb-1">{{message}}</p>
+                        {{#action}}<p class="small mb-0"><strong>{{#str}} ad_reviewaction, local_tla {{/str}}:</strong> {{action}}</p>{{/action}}
+                    </div>
+                {{/findings}}
+            </details>
+        {{/activities}}
+        {{#hasactivities}}
+            <nav class="d-flex flex-wrap gap-2" aria-label="{{#str}} ad_navigation, local_tla {{/str}}">
+                {{#hasprevious}}<a class="btn btn-outline-secondary" href="{{previousurl}}">{{#str}} ad_previous, local_tla {{/str}}</a>{{/hasprevious}}
+                {{#hasnext}}<a class="btn btn-outline-secondary" href="{{nexturl}}">{{#str}} ad_next, local_tla {{/str}}</a>{{/hasnext}}
+            </nav>
+        {{/hasactivities}}
+    </div>
+</section>

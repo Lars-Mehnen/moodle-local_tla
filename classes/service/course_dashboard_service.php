@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Course dashboard data service.
@@ -30,7 +30,6 @@ use local_tla\repository\course_dose_response_repository;
 use local_tla\repository\quiz_progress_repository;
 use local_tla\indicator\score_distribution_interpreter;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Assemble read-only course dashboard data.

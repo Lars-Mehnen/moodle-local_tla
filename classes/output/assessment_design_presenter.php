@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Present current assessment configuration without quality colours.
@@ -24,9 +24,10 @@
 
 namespace local_tla\output;
 
-defined('MOODLE_INTERNAL') || die();
 
-/** Aggregate/configuration-only template data with bounded, accessible paging. */
+/**
+ * Aggregate, configuration-only template data with bounded, accessible paging.
+ */
 final class assessment_design_presenter {
     /** @var int Activity cards per page. All activities remain accessible. */
     public const PAGE_SIZE = 20;
@@ -62,13 +63,18 @@ final class assessment_design_presenter {
             $cards[] = [
                 'cmid' => $activity['cmid'],
                 // Mustache escapes this plain text; do not encode ampersands twice.
-                'name' => html_entity_decode(strip_tags(format_string($activity['name'])),
-                    ENT_QUOTES | ENT_HTML5, 'UTF-8'),
+                'name' => html_entity_decode(
+                    strip_tags(format_string($activity['name'])),
+                    ENT_QUOTES | ENT_HTML5,
+                    'UTF-8'
+                ),
                 'moduletype' => get_string('pluginname', 'mod_' . $activity['module']),
                 'hidden' => !$activity['visible'],
                 'rulecount' => get_string('ad_rulecount', 'local_tla', count($findings)),
-                'viewurl' => (new \moodle_url('/mod/' . $activity['module'] . '/view.php',
-                    ['id' => $activity['cmid']]))->out(false),
+                'viewurl' => (new \moodle_url(
+                    '/mod/' . $activity['module'] . '/view.php',
+                    ['id' => $activity['cmid']]
+                ))->out(false),
                 'settings' => $this->settings_rows($activity),
                 'findings' => $findings,
             ];
@@ -78,8 +84,11 @@ final class assessment_design_presenter {
         return [
             'activities' => $cards,
             'hasactivities' => !empty($cards),
-            'snapshotlabel' => get_string('ad_snapshot', 'local_tla',
-                userdate($design['checkedat'], get_string('strftimedatetime', 'langconfig'))),
+            'snapshotlabel' => get_string(
+                'ad_snapshot',
+                'local_tla',
+                userdate($design['checkedat'], get_string('strftimedatetime', 'langconfig'))
+            ),
             'pageinfo' => get_string('ad_pagination', 'local_tla', (object) [
                 'first' => $total === 0 ? 0 : $page * self::PAGE_SIZE + 1,
                 'last' => min($total, ($page + 1) * self::PAGE_SIZE),
@@ -118,8 +127,10 @@ final class assessment_design_presenter {
                         : userdate((int) $value, get_string('strftimedatetime', 'langconfig'));
                 } else if (in_array($key, $booleans, true)) {
                     $text = get_string($value ? 'yes' : 'no');
-                } else if (($key === 'attempts' && (int) $value === 0) ||
-                        ($key === 'maxattempts' && (int) $value === -1)) {
+                } else if (
+                    ($key === 'attempts' && (int) $value === 0) ||
+                        ($key === 'maxattempts' && (int) $value === -1)
+                ) {
                     $text = get_string('ad_unlimited', 'local_tla');
                 } else if ($key === 'grademethod') {
                     $text = in_array((int) $value, [1, 2, 3, 4], true)

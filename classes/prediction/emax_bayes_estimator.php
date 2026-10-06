@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Bayesian Emax (saturating dose-response) estimator.
@@ -26,7 +26,6 @@ namespace local_tla\prediction;
 
 use local_tla\statistics\descriptive;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Fit a Bayesian Emax model E = Emax * C / (EC50 + C) + Normal(0, sigma).
@@ -147,16 +146,16 @@ final class emax_bayes_estimator {
             $sde = 0.0;
         }
 
-        // Parameter grids. Linear spacing keeps the cell measure constant so it
-        // cancels in the posterior normalisation.
+        // Parameter grids. Linear spacing keeps the cell measure constant so it.
+        // Cancels in the posterior normalisation.
         $emaxgrid = self::linspace(0.0, self::EMAX_MAX, self::EMAX_STEPS);
         $ec50grid = self::linspace(0.1, max(1.0, $cmax) * 2.0, self::EC50_STEPS);
         $sigmahi = min(60.0, max(5.0, 1.5 * $sde));
         $sigmagrid = self::linspace(0.5, $sigmahi, self::SIGMA_STEPS);
 
-        // Prior scales (weakly informative, adapted to the data scale, mirroring
-        // the reference model's intent: Emax ~ HalfNormal, EC50 ~ HalfNormal,
-        // sigma ~ Exponential).
+        // Prior scales (weakly informative, adapted to the data scale, mirroring.
+        // The reference model's intent: Emax ~ HalfNormal, EC50 ~ HalfNormal,.
+        // Sigma ~ Exponential).
         $ec50scale = max(1.0, $cmax);
         $sigmamean = max(1.0, $sde);
 
@@ -165,9 +164,9 @@ final class emax_bayes_estimator {
             $sumee += $e * $e;
         }
 
-        // Grid evaluation. For a fixed EC50 the ratio r_i = C_i / (EC50 + C_i) is
-        // constant, so the Gaussian sum of squares is quadratic in Emax:
-        //   S2(Emax) = sum e^2 - 2 Emax * sum(e r) + Emax^2 * sum(r^2).
+        // Grid evaluation. For a fixed EC50 the ratio r_i = C_i / (EC50 + C_i) is.
+        // Constant, so the Gaussian sum of squares is quadratic in Emax:.
+        // S2(Emax) = sum e^2 - 2 Emax * sum(e r) + Emax^2 * sum(r^2).
         // This removes the inner per-observation loop from the triple grid.
         $maxlog = -INF;
         $logpost = [];
@@ -230,8 +229,8 @@ final class emax_bayes_estimator {
                     $wec50[$j] += $w;
                     $wsigma[$s] += $w;
 
-                    // Posterior-predictive spread: expected SD of replicated data
-                    // for this parameter cell = sqrt(Var_i(mu_i) + sigma^2), where
+                    // Posterior-predictive spread: expected SD of replicated data.
+                    // For this parameter cell = sqrt(Var_i(mu_i) + sigma^2), where.
                     // Var_i(mu_i) = Emax^2 * Var_i(r_i).
                     $varmu = $emaxgrid[$a] * $emaxgrid[$a] * $varr[$j];
                     $repsdvals[] = sqrt($varmu + $sigmagrid[$s] * $sigmagrid[$s]);
@@ -246,8 +245,8 @@ final class emax_bayes_estimator {
         $sigmasummary = self::summary($sigmagrid, $wsigma);
 
         // Posterior effect curve with an 80% credible band (10th/50th/90th).
-        // The grid is one point per whole attempt so the category axis reads
-        // cleanly and aligns with the aggregate per-attempt means.
+        // The grid is one point per whole attempt so the category axis reads.
+        // Cleanly and aligns with the aggregate per-attempt means.
         $curvegrid = self::integer_grid($cmax);
         $curve = [];
         foreach ($curvegrid as $cx) {
@@ -279,9 +278,9 @@ final class emax_bayes_estimator {
             'pvalue' => $ppcpvalue,
         ];
 
-        // Share of the effect variance the fitted curve explains (a pseudo-R^2):
-        // 1 - residual/total. Near zero means practice barely predicts the result,
-        // i.e. there is no clear dose-response however tidily the curve is drawn.
+        // Share of the effect variance the fitted curve explains (a pseudo-R^2):.
+        // 1 - residual/total. Near zero means practice barely predicts the result,.
+        // I.e. there is no clear dose-response however tidily the curve is drawn.
         $explained = $obssd > 1e-9
             ? max(0.0, min(1.0, 1.0 - ($sigmasummary['median'] * $sigmasummary['median'])
                 / ($obssd * $obssd)))
@@ -381,18 +380,18 @@ final class emax_bayes_estimator {
         float $obssd,
         float $explained
     ): array {
-        // A model spread grossly different from the observed spread means the
-        // Emax + Gaussian model does not describe this course's data well. A ratio
-        // (unlike a posterior-predictive tail probability) does not collapse to a
-        // verdict as the sample size grows, so a good fit stays "good" at any N.
+        // A model spread grossly different from the observed spread means the.
+        // Emax + Gaussian model does not describe this course's data well. A ratio.
+        // (unlike a posterior-predictive tail probability) does not collapse to a.
+        // Verdict as the sample size grows, so a good fit stays "good" at any N.
         $ratio = ($obssd > 1e-9) ? $repsdmedian / $obssd : INF;
         if ($ratio < self::POOR_SPREAD_RATIO_LO || $ratio > self::POOR_SPREAD_RATIO_HI) {
             return ['poor', 'red'];
         }
 
-        // The curve may fit the spread fine yet explain almost none of the
-        // variation: practice does not predict performance. Report that plainly
-        // instead of a tidy-but-meaningless curve with EC50 pinned at zero.
+        // The curve may fit the spread fine yet explain almost none of the.
+        // Variation: practice does not predict performance. Report that plainly.
+        // Instead of a tidy-but-meaningless curve with EC50 pinned at zero.
         if ($explained < self::FLAT_EXPLAINED_MAX) {
             return ['flat', 'unknown'];
         }

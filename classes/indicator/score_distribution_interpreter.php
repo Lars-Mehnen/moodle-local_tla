@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Contextualise descriptive score shapes using current assessment settings.
@@ -24,7 +24,6 @@
 
 namespace local_tla\indicator;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Shared by dashboard and external report. No misconduct detection, no generated
@@ -62,11 +61,13 @@ final class score_distribution_interpreter {
                 };
                 $recommendation = in_array($context, ['bestofmultiple', 'lastofmultiple'], true)
                     ? 'review_first_and_final' : 'review_assessment_design';
-                // Gated exception: a quiz ceiling with no retry mechanism to
-                // explain it (single attempt or unknown context) is the
-                // leak-prone case. Only then suggest per-student randomization.
-                if (($config['module'] ?? '') === 'quiz'
-                        && in_array($context, ['single', 'unknown'], true)) {
+                // Gated exception: a quiz ceiling with no retry mechanism to.
+                // Explain it (single attempt or unknown context) is the.
+                // Leak-prone case. Only then suggest per-student randomization.
+                if (
+                    ($config['module'] ?? '') === 'quiz'
+                        && in_array($context, ['single', 'unknown'], true)
+                ) {
                     $severity = 'yellow';
                     $code = 'ceiling_unrandomised';
                     $recommendation = 'parameterize_quiz';

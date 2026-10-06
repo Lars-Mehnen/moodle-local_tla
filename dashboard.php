@@ -1,4 +1,27 @@
 <?php
+// This file is part of Moodle - https://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+
+/**
+ * Course analytics dashboard page.
+ *
+ * @package    local_tla
+ * @copyright  2026 Lars Mehnen <lars.mehnen@technikum-wien.at>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 require_once(__DIR__ . '/../../config.php');
 
 use local_tla\indicator\traffic_light_calculator;
@@ -22,8 +45,8 @@ $timestart = optional_param(
     PARAM_INT
 );
 
-// Defend against manipulated or nonsensical time parameters so the service is
-// never called with an invalid interval.
+// Defend against manipulated or nonsensical time parameters so the service is.
+// Never called with an invalid interval.
 if ($timestart < 0 || $timestart >= $timeend) {
     $timeend = time() + 1;
     $timestart = $timeend - ($period * DAYSECS);
@@ -32,6 +55,7 @@ if ($timestart < 0 || $timestart >= $timeend) {
 // Single access guard: valid course, logged-in course context, local/tla:view.
 $course = get_course($courseid);
 $context = dashboard_access::validate((int) $course->id);
+require_login($course);
 
 $url = new moodle_url('/local/tla/dashboard.php', [
     'id' => $course->id,
@@ -59,9 +83,9 @@ $minobservations = $minobservationsconfig === false
     ? 8
     : (int) $minobservationsconfig;
 
-// Harden against misconfigured admin settings so a bad value can never crash
-// the dashboard: clamp thresholds to [0, 1], keep yellow <= red, and enforce a
-// minimum observation count of at least one.
+// Harden against misconfigured admin settings so a bad value can never crash.
+// The dashboard: clamp thresholds to [0, 1], keep yellow <= red, and enforce a.
+// Minimum observation count of at least one.
 $yellowthreshold = min(1.0, max(0.0, $yellowthreshold));
 $redthreshold = min(1.0, max(0.0, $redthreshold));
 if ($yellowthreshold > $redthreshold) {
@@ -77,8 +101,8 @@ $data = $service->get_course_dashboard_data(
     $minobservations
 );
 
-// Only classifiable submissions form the denominator: noduedate cannot be late
-// and unresolved must not count as an unremarkable observation.
+// Only classifiable submissions form the denominator: noduedate cannot be late.
+// And unresolved must not count as an unremarkable observation.
 $classifiable = (int) $data['assignmentsubmissions']['ontime']
     + (int) $data['assignmentsubmissions']['late'];
 
@@ -146,7 +170,7 @@ $activeuserchart->add_series(new core\chart_series(
 $stringmanager = get_string_manager();
 
 $moduleevents = array_map(
-    static function(array $row) use ($stringmanager): array {
+    static function (array $row) use ($stringmanager): array {
         $component = (string) $row['component'];
         $displayname = $component;
 
@@ -334,8 +358,8 @@ $drexplained = $dra['explainedvariance'] === null
     ? null
     : $fmtval($dra['explainedvariance'] * 100);
 
-// Data table backing the chart: per whole attempt, the observed average (where a
-// large enough group exists) and the posterior curve with its 80% band.
+// Data table backing the chart: per whole attempt, the observed average (where a.
+// Large enough group exists) and the posterior curve with its 80% band.
 $drcurvedata = [];
 if ($dra['status'] !== 'unknown') {
     $binbyc = [];
@@ -353,10 +377,10 @@ if ($dra['status'] !== 'unknown') {
         ];
     }
 }
-// Build the posterior curve as a Moodle Chart.js line chart, consistent with the
-// other dashboard graphs. The x-axis is whole completed attempts; the credible
-// band is drawn as lower/median/upper bound lines with the aggregate per-attempt
-// average overlaid.
+// Build the posterior curve as a Moodle Chart.js line chart, consistent with the.
+// Other dashboard graphs. The x-axis is whole completed attempts; the credible.
+// Band is drawn as lower/median/upper bound lines with the aggregate per-attempt.
+// Average overlaid.
 $doseresponsechart = '';
 if ($dra['status'] !== 'unknown' && !empty($dra['curve'])) {
     $curvelabels = array_map(
@@ -382,8 +406,8 @@ if ($dra['status'] !== 'unknown' && !empty($dra['curve'])) {
     $chart->set_smooth(true);
     $chart->set_labels($curvelabels);
 
-    // The band is a translucent fill so the median and observed lines drawn on
-    // top of it stay visible; its own boundary lines are faint.
+    // The band is a translucent fill so the median and observed lines drawn on.
+    // Top of it stay visible; its own boundary lines are faint.
     $lower = new core\chart_series(get_string('doseresponselowerband', 'local_tla'), $lowerseries);
     $lower->set_color('rgba(77, 171, 247, 0.28)');
     $upper = new core\chart_series(get_string('doseresponseupperband', 'local_tla'), $upperseries);
@@ -394,8 +418,8 @@ if ($dra['status'] !== 'unknown' && !empty($dra['curve'])) {
     $observed = new core\chart_series(get_string('doseresponseobserved', 'local_tla'), $observedseries);
     $observed->set_color('#e8590c');
 
-    // Order matters: the upper band fills down to the lower band beneath it, then
-    // the median and observed lines are drawn on top.
+    // Order matters: the upper band fills down to the lower band beneath it, then.
+    // The median and observed lines are drawn on top.
     $chart->add_series($lower);
     $chart->add_series($upper);
     $chart->add_series($median);

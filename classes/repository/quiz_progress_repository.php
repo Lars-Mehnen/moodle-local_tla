@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Read-only quiz attempt progress repository.
@@ -26,7 +26,6 @@ namespace local_tla\repository;
 
 use local_tla\indicator\attempt_progress_analyzer;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Aggregate per-quiz progress between completed attempts.
@@ -157,8 +156,8 @@ final class quiz_progress_repository {
                 ];
             }
 
-            // Exclude single-attempt quizzes with no repetition to avoid a
-            // misleading verdict.
+            // Exclude single-attempt quizzes with no repetition to avoid a.
+            // Misleading verdict.
             if ((int) $quiz->maxattempts === 1 && !$hasmulti) {
                 continue;
             }

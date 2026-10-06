@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Tests for the score-distribution analyzer.
@@ -29,6 +29,9 @@ use PHPUnit\Framework\Attributes\CoversClass;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Tests for score_distribution_analyzer_test.
+ */
 #[CoversClass(score_distribution_analyzer::class)]
 final class score_distribution_analyzer_test extends \advanced_testcase {
     /** @var score_distribution_analyzer Analyzer under test. */
@@ -105,8 +108,8 @@ final class score_distribution_analyzer_test extends \advanced_testcase {
     }
 
     public function test_u_shape_wins_over_ceiling(): void {
-        // 30% low, 70% high: median is 95 (would satisfy ceiling), but the
-        // balanced extremes make it a genuine U-shape, which must win.
+        // 30% low, 70% high: median is 95 (would satisfy ceiling), but the.
+        // Balanced extremes make it a genuine U-shape, which must win.
         $values = array_merge(self::repeat(5.0, 3), self::repeat(95.0, 7));
         $result = $this->analyzer->analyze($values, 8);
 

@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Tests for the parameterization advisor.
@@ -29,6 +29,9 @@ use PHPUnit\Framework\Attributes\CoversClass;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Tests for parameterization_advisor_test.
+ */
 #[CoversClass(parameterization_advisor::class)]
 final class parameterization_advisor_test extends \advanced_testcase {
     /** @var parameterization_advisor Advisor under test. */
@@ -45,7 +48,7 @@ final class parameterization_advisor_test extends \advanced_testcase {
             // Provided variants must reach the target (ratio * n).
             $this->assertGreaterThanOrEqual($r['targetvariants'], $r['variants'], "N={$n}");
             $this->assertSame($n * parameterization_advisor::DEFAULT_RATIO, $r['targetvariants']);
-            // valuesperparam ^ params == variants.
+            // Valuesperparam ^ params == variants.
             $this->assertSame(
                 (int) ($r['valuesperparam'] ** $r['params']),
                 $r['variants'],

@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Read-only configuration check, independent of log scans and student grades.
@@ -32,6 +32,7 @@ $courseid = required_param('id', PARAM_INT);
 $page = max(0, optional_param('designpage', 0, PARAM_INT));
 $course = get_course($courseid);
 $context = dashboard_access::validate((int) $course->id);
+require_login($course);
 $url = new moodle_url('/local/tla/assessment_design.php', ['id' => $course->id, 'designpage' => $page]);
 $PAGE->set_url($url);
 $PAGE->set_context($context);
@@ -44,7 +45,10 @@ $design = (new assessment_design_service())->get_course_design((int) $course->id
 $view = (new assessment_design_presenter())->export($design, $url, $page);
 
 echo $OUTPUT->header();
-echo html_writer::link(new moodle_url('/local/tla/dashboard.php', ['id' => $course->id]),
-    get_string('ad_back', 'local_tla'), ['class' => 'd-inline-block mb-3']);
+echo html_writer::link(
+    new moodle_url('/local/tla/dashboard.php', ['id' => $course->id]),
+    get_string('ad_back', 'local_tla'),
+    ['class' => 'd-inline-block mb-3']
+);
 echo $OUTPUT->render_from_template('local_tla/assessment_design', $view);
 echo $OUTPUT->footer();

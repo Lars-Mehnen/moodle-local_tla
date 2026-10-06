@@ -24,13 +24,11 @@
 
 namespace local_tla\statistics;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Descriptive statistics class for local_tla plugin.
  */
 class descriptive {
-    
     /**
      * Calculate mean of an array of values.
      *
@@ -47,7 +45,7 @@ class descriptive {
 
         return $sum / $count;
     }
-    
+
     /**
      * Calculate median of an array of values.
      *
@@ -71,7 +69,7 @@ class descriptive {
             return ($low + $high) / 2;
         }
     }
-    
+
     /**
      * Calculate sample variance of an array of values.
      *
@@ -85,15 +83,15 @@ class descriptive {
 
         $mean = self::mean($values);
         $sum = 0;
-        
+
         foreach ($values as $value) {
             $sum += pow(($value - $mean), 2);
         }
-        
+
         $variance = $sum / (count($values) - 1);
         return $variance;
     }
-    
+
     /**
      * Calculate standard deviation of an array of values.
      *
@@ -108,7 +106,7 @@ class descriptive {
         $variance = self::variance($values);
         return sqrt($variance);
     }
-    
+
     /**
      * Calculate quantile of an array of values using R Type 7.
      *
@@ -124,8 +122,8 @@ class descriptive {
         sort($values);
         $count = count($values);
         $index = ($count - 1) * $q;
-        
-        // R Type 7
+
+        // R Type 7.
         $lower = floor($index);
         $upper = ceil($index);
         $weight = $index - $lower;
@@ -136,7 +134,7 @@ class descriptive {
             return $values[$lower] * (1 - $weight) + $values[$upper] * $weight;
         }
     }
-    
+
     /**
      * Calculate median absolute deviation.
      *
@@ -149,15 +147,15 @@ class descriptive {
         }
 
         $median = self::median($values);
-        $deviations = array();
-        
+        $deviations = [];
+
         foreach ($values as $value) {
             $deviations[] = abs($value - $median);
         }
-        
+
         return self::median($deviations);
     }
-    
+
     /**
      * Calculate skewness of an array of values.
      *
@@ -172,20 +170,20 @@ class descriptive {
         $count = count($values);
         $mean = self::mean($values);
         $stddev = self::stddev($values);
-        
+
         if ($stddev == 0) {
             return 0;
         }
-        
+
         $sum = 0;
         foreach ($values as $value) {
             $sum += pow(($value - $mean) / $stddev, 3);
         }
-        
+
         $skewness = $sum / $count;
         return $skewness;
     }
-    
+
     /**
      * Calculate kurtosis of an array of values.
      *
@@ -200,20 +198,20 @@ class descriptive {
         $count = count($values);
         $mean = self::mean($values);
         $stddev = self::stddev($values);
-        
+
         if ($stddev == 0) {
             return 0;
         }
-        
+
         $sum = 0;
         foreach ($values as $value) {
             $sum += pow(($value - $mean) / $stddev, 4);
         }
-        
+
         $kurtosis = $sum / $count - 3;
         return $kurtosis;
     }
-    
+
     /**
      * Calculate histogram of an array of values.
      *
@@ -229,21 +227,21 @@ class descriptive {
         $min = min($values);
         $max = max($values);
         $range = $max - $min;
-        
+
         if ($range == 0) {
             return array_fill(0, $bins, 0);
         }
-        
+
         $histogram = array_fill(0, $bins, 0);
-        
+
         foreach ($values as $value) {
             $bin = min(floor(($value - $min) / $range * $bins), $bins - 1);
             $histogram[$bin]++;
         }
-        
+
         return $histogram;
     }
-    
+
     /**
      * Calculate correlation between two arrays of values.
      *
@@ -257,31 +255,31 @@ class descriptive {
         }
 
         $n = count($x);
-        $mean_x = self::mean($x);
-        $mean_y = self::mean($y);
-        
-        $sum_xy = 0;
-        $sum_x2 = 0;
-        $sum_y2 = 0;
-        
+        $meanx = self::mean($x);
+        $meany = self::mean($y);
+
+        $sumxy = 0;
+        $sumx2 = 0;
+        $sumy2 = 0;
+
         for ($i = 0; $i < $n; $i++) {
-            $diff_x = $x[$i] - $mean_x;
-            $diff_y = $y[$i] - $mean_y;
-            
-            $sum_xy += $diff_x * $diff_y;
-            $sum_x2 += $diff_x * $diff_x;
-            $sum_y2 += $diff_y * $diff_y;
+            $diffx = $x[$i] - $meanx;
+            $diffy = $y[$i] - $meany;
+
+            $sumxy += $diffx * $diffy;
+            $sumx2 += $diffx * $diffx;
+            $sumy2 += $diffy * $diffy;
         }
-        
-        $denominator = sqrt($sum_x2 * $sum_y2);
-        
+
+        $denominator = sqrt($sumx2 * $sumy2);
+
         if ($denominator == 0) {
             return null;
         }
-        
-        return $sum_xy / $denominator;
+
+        return $sumxy / $denominator;
     }
-    
+
     /**
      * Calculate moving average.
      *
@@ -294,9 +292,9 @@ class descriptive {
             return null;
         }
 
-        $result = array();
+        $result = [];
         $count = count($values);
-        
+
         for ($i = 0; $i <= $count - $window; $i++) {
             $sum = 0;
             for ($j = 0; $j < $window; $j++) {
@@ -304,10 +302,10 @@ class descriptive {
             }
             $result[] = $sum / $window;
         }
-        
+
         return $result;
     }
-    
+
     /**
      * Calculate exponential moving average.
      *
@@ -320,9 +318,9 @@ class descriptive {
             return null;
         }
 
-        $result = array();
+        $result = [];
         $ema = $values[0];
-        
+
         for ($i = 0; $i < count($values); $i++) {
             if ($i == 0) {
                 $result[] = $values[$i];
@@ -331,10 +329,10 @@ class descriptive {
                 $result[] = $ema;
             }
         }
-        
+
         return $result;
     }
-    
+
     /**
      * Calculate linear regression.
      *
@@ -348,38 +346,38 @@ class descriptive {
         }
 
         $n = count($x);
-        $sum_x = array_sum($x);
-        $sum_y = array_sum($y);
-        $sum_xy = 0;
-        $sum_x2 = 0;
-        
+        $sumx = array_sum($x);
+        $sumy = array_sum($y);
+        $sumxy = 0;
+        $sumx2 = 0;
+
         for ($i = 0; $i < $n; $i++) {
-            $sum_xy += $x[$i] * $y[$i];
-            $sum_x2 += $x[$i] * $x[$i];
+            $sumxy += $x[$i] * $y[$i];
+            $sumx2 += $x[$i] * $x[$i];
         }
-        
-        $slope = ($n * $sum_xy - $sum_x * $sum_y) / ($n * $sum_x2 - $sum_x * $sum_x);
-        $intercept = ($sum_y - $slope * $sum_x) / $n;
-        
-        // Calculate R-squared
-        $ss_tot = 0;
-        $ss_reg = 0;
-        $mean_y = self::mean($y);
-        
+
+        $slope = ($n * $sumxy - $sumx * $sumy) / ($n * $sumx2 - $sumx * $sumx);
+        $intercept = ($sumy - $slope * $sumx) / $n;
+
+        // Calculate R-squared.
+        $sstot = 0;
+        $ssreg = 0;
+        $meany = self::mean($y);
+
         for ($i = 0; $i < $n; $i++) {
-            $ss_tot += pow($y[$i] - $mean_y, 2);
-            $ss_reg += pow($slope * $x[$i] + $intercept - $mean_y, 2);
+            $sstot += pow($y[$i] - $meany, 2);
+            $ssreg += pow($slope * $x[$i] + $intercept - $meany, 2);
         }
-        
-        $r2 = $ss_reg / $ss_tot;
-        
-        return array(
+
+        $r2 = $ssreg / $sstot;
+
+        return [
             'slope' => $slope,
             'intercept' => $intercept,
-            'r2' => $r2
-        );
+            'r2' => $r2,
+        ];
     }
-    
+
     /**
      * Calculate weighted linear regression.
      *
@@ -389,46 +387,48 @@ class descriptive {
      * @return array|null Regression results or null if invalid input
      */
     public static function weighted_linear_regression($x, $y, $weights) {
-        if (!is_array($x) || !is_array($y) || !is_array($weights) || count($x) != count($y) || 
-            count($x) != count($weights) || empty($x) || count($x) < 2) {
+        if (
+            !is_array($x) || !is_array($y) || !is_array($weights) || count($x) != count($y) ||
+            count($x) != count($weights) || empty($x) || count($x) < 2
+        ) {
             return null;
         }
 
-        $sum_w = array_sum($weights);
-        $sum_wx = 0;
-        $sum_wy = 0;
-        $sum_wxy = 0;
-        $sum_wxx = 0;
-        
+        $sumw = array_sum($weights);
+        $sumwx = 0;
+        $sumwy = 0;
+        $sumwxy = 0;
+        $sumwxx = 0;
+
         for ($i = 0; $i < count($x); $i++) {
             $w = $weights[$i];
-            $sum_wx += $w * $x[$i];
-            $sum_wy += $w * $y[$i];
-            $sum_wxy += $w * $x[$i] * $y[$i];
-            $sum_wxx += $w * $x[$i] * $x[$i];
+            $sumwx += $w * $x[$i];
+            $sumwy += $w * $y[$i];
+            $sumwxy += $w * $x[$i] * $y[$i];
+            $sumwxx += $w * $x[$i] * $x[$i];
         }
-        
-        // Use normal equations to solve for slope and intercept
-        // We can also calculate it using the general form:
-        // (Σw × Σwx × x) - (Σw × Σwy)
-        // Slope = -----------------------------------
-        // (Σw × Σx²) - (Σwx)²
-        
-        $numerator = ($sum_w * $sum_wxy) - ($sum_wx * $sum_wy);
-        $denominator = ($sum_w * $sum_wxx) - ($sum_wx * $sum_wx);
-        
+
+        // Use normal equations to solve for slope and intercept.
+        // We can also calculate it using the general form:.
+        // (Σw × Σwx × x) - (Σw × Σwy).
+        // Slope = -----------------------------------.
+        // (Σw × Σx²) - (Σwx)².
+
+        $numerator = ($sumw * $sumwxy) - ($sumwx * $sumwy);
+        $denominator = ($sumw * $sumwxx) - ($sumwx * $sumwx);
+
         if ($denominator == 0) {
             return null;
         }
-        
+
         $slope = $numerator / $denominator;
-        $intercept = ($sum_wy - $slope * $sum_wx) / $sum_w;
-        
-        // For R-squared, we would need to calculate a weighted R² but for simplicity we'll return basic values
-        return array(
+        $intercept = ($sumwy - $slope * $sumwx) / $sumw;
+
+        // For R-squared, we would need to calculate a weighted R² but for simplicity we'll return basic values.
+        return [
             'slope' => $slope,
             'intercept' => $intercept,
-        );
+        ];
     }
 
     /**
@@ -442,13 +442,13 @@ class descriptive {
             return false;
         }
 
-        return array(
+        return [
             'count' => count($values),
             'mean' => self::mean($values),
             'median' => self::median($values),
             'stdev' => self::stddev($values),
             'min' => min($values),
-            'max' => max($values)
-        );
+            'max' => max($values),
+        ];
     }
 }

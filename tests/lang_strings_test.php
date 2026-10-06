@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Language string coverage and parity tests for local_tla.
@@ -24,8 +24,10 @@
 
 namespace local_tla;
 
-defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Tests for lang_strings_test.
+ */
 final class lang_strings_test extends \advanced_testcase {
     /**
      * Every string used by the dashboard must exist for local_tla.

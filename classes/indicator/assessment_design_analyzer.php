@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Explain assessment configuration without rating people or teaching quality.
@@ -24,7 +24,6 @@
 
 namespace local_tla\indicator;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Deterministic, database-free rules. No simulations and no grade changes.
@@ -34,17 +33,25 @@ defined('MOODLE_INTERNAL') || die();
  * purpose, course-grade weight and independent authorship remain unknown.
  */
 final class assessment_design_analyzer {
-    // Moodle mod/quiz/lib.php. Kept explicit to avoid loading the entire module
-    // for this pure calculation; the integration test checks parity with core.
+    // Moodle mod/quiz/lib.php. Kept explicit to avoid loading the entire module.
+    // For this pure calculation; the integration test checks parity with core.
+    /** @var int Moodle GRADE_HIGHEST marker. */
     public const GRADE_HIGHEST = 1;
+    /** @var int Moodle GRADE_AVERAGE marker. */
     public const GRADE_AVERAGE = 2;
+    /** @var int Moodle GRADE_FIRST marker. */
     public const GRADE_FIRST = 3;
+    /** @var int Moodle GRADE_LAST marker. */
     public const GRADE_LAST = 4;
 
     // Moodle mod_quiz\question\display_options review bit fields.
+    /** @var int Moodle DURING marker. */
     public const DURING = 0x10000;
+    /** @var int Moodle IMMEDIATE marker. */
     public const IMMEDIATE = 0x01000;
+    /** @var int Moodle OPEN marker. */
     public const OPEN = 0x00100;
+    /** @var int Moodle CLOSED marker. */
     public const CLOSED = 0x00010;
 
     /**
@@ -117,8 +124,10 @@ final class assessment_design_analyzer {
             // This is a necessary-bound check, NOT a prediction of working speed.
             $open = (int) ($s['timeopen'] ?? 0);
             $close = (int) ($s['timeclose'] ?? 0);
-            if ($open > 0 && $close > 0 &&
-                    ($close <= $open || (int) ($s['delay1'] ?? 0) >= $close - $open)) {
+            if (
+                $open > 0 && $close > 0 &&
+                    ($close <= $open || (int) ($s['delay1'] ?? 0) >= $close - $open)
+            ) {
                 $f[] = self::finding('quiz_retry_window', 'review', 'timing', 'timing');
             }
         } else {
@@ -127,8 +136,8 @@ final class assessment_design_analyzer {
         if (!empty($s['attemptonlast'])) {
             $f[] = self::finding('quiz_continuation', 'observed', 'grading');
         }
-        // A quiz's preferred behaviour is not a reliable inventory of the actual
-        // question types or their penalties. CodeRunner may override behaviour.
+        // A quiz's preferred behaviour is not a reliable inventory of the actual.
+        // Question types or their penalties. CodeRunner may override behaviour.
         $f[] = self::finding('question_rules', 'unknown', 'questionrules', 'questionrules');
         return [$f, $context];
     }
@@ -154,8 +163,12 @@ final class assessment_design_analyzer {
             return self::finding('feedback_immediate', 'review', 'feedback', 'feedbackwindow');
         }
         if (self::has_review_signal($s, self::CLOSED)) {
-            return self::finding((int) $s['timeclose'] === 0 ? 'feedback_no_close' : 'feedback_after_close',
-                'review', 'feedback', 'feedbackwindow');
+            return self::finding(
+                (int) $s['timeclose'] === 0 ? 'feedback_no_close' : 'feedback_after_close',
+                'review',
+                'feedback',
+                'feedbackwindow'
+            );
         }
         return self::finding('feedback_no_postattempt', 'review', 'feedback', 'feedbackwindow');
     }
@@ -174,8 +187,10 @@ final class assessment_design_analyzer {
         if (((int) ($s['reviewoverallfeedback'] ?? 0) & $phase) !== 0) {
             return true;
         }
-        if (((int) ($s['reviewmaxmarks'] ?? 0) & $phase) !== 0 &&
-                ((int) ($s['reviewmarks'] ?? 0) & $phase) !== 0) {
+        if (
+            ((int) ($s['reviewmaxmarks'] ?? 0) & $phase) !== 0 &&
+                ((int) ($s['reviewmarks'] ?? 0) & $phase) !== 0
+        ) {
             return true;
         }
         if (((int) ($s['reviewattempt'] ?? 0) & $phase) === 0) {
@@ -224,16 +239,22 @@ final class assessment_design_analyzer {
         if (isset($s['grade']) && (float) $s['grade'] === 0.0) {
             $f[] = self::finding('ungraded', 'notapplicable', 'grading');
         }
-        $f[] = self::finding(!empty($s['markingworkflow']) ? 'assign_feedback_workflow' : 'assign_feedback_unknown',
-            'unknown', 'feedback', 'assignmentfeedback');
+        $f[] = self::finding(
+            !empty($s['markingworkflow']) ? 'assign_feedback_workflow' : 'assign_feedback_unknown',
+            'unknown',
+            'feedback',
+            'assignmentfeedback'
+        );
         if (!empty($s['teamsubmission'])) {
             $f[] = self::finding('assign_team', 'observed', 'scope', 'team');
         }
         if (!empty($s['gradepenalty'])) {
             $f[] = self::finding('assign_gradepenalty', 'unknown', 'grading', 'gradepenalty');
         }
-        if ($multiple && empty($s['nosubmissions']) && (int) ($s['cutoffdate'] ?? 0) > 0 &&
-                (int) ($s['gradingduedate'] ?? 0) >= (int) $s['cutoffdate']) {
+        if (
+            $multiple && empty($s['nosubmissions']) && (int) ($s['cutoffdate'] ?? 0) > 0 &&
+                (int) ($s['gradingduedate'] ?? 0) >= (int) $s['cutoffdate']
+        ) {
             $f[] = self::finding('assign_feedback_schedule', 'review', 'timing', 'assignmentfeedback');
         }
         return [$f, $context];

@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignoreFile
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -8,11 +9,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Shared, database-free assessment-design test cases.
@@ -24,7 +25,6 @@
 
 namespace local_tla\tests;
 
-defined('MOODLE_INTERNAL') || die();
 
 /** Test fixtures only. Never loaded by dashboard or external functions. */
 final class assessment_design_cases {

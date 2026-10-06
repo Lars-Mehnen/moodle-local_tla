@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Score-distribution shape analyzer.
@@ -26,7 +26,6 @@ namespace local_tla\indicator;
 
 use local_tla\statistics\descriptive;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Classify the shape of a graded activity's score distribution.
@@ -226,8 +225,8 @@ final class score_distribution_analyzer {
         float $extremeshare,
         float $median
     ): array {
-        // U-shape first, so a genuine two-peaked distribution is not mistaken
-        // for a one-sided ceiling or floor effect.
+        // U-shape first, so a genuine two-peaked distribution is not mistaken.
+        // For a one-sided ceiling or floor effect.
         if (
             $lowshare >= self::USHAPE_LOW_SHARE &&
             $highshare >= self::USHAPE_HIGH_SHARE &&

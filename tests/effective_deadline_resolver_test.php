@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Tests for the effective deadline resolver.
@@ -29,6 +29,9 @@ use PHPUnit\Framework\Attributes\CoversClass;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Tests for effective_deadline_resolver_test.
+ */
 #[CoversClass(effective_deadline_resolver::class)]
 final class effective_deadline_resolver_test extends \advanced_testcase {
     /** @var effective_deadline_resolver Resolver under test. */
@@ -95,9 +98,9 @@ final class effective_deadline_resolver_test extends \advanced_testcase {
     }
 
     public function test_user_override_null_duedate_blocks_group_and_falls_back(): void {
-        // User row exists but duedate NULL: group override is discarded, the
-        // plain assignment due date applies, and the mechanism is still counted
-        // as a user override because the row was decisive.
+        // User row exists but duedate NULL: group override is discarded, the.
+        // Plain assignment due date applies, and the mechanism is still counted.
+        // As a user override because the row was decisive.
         $groups = [['sortorder' => 1, 'duedate' => 2000]];
         $result = $this->resolver->resolve(1500, 1000, true, null, $groups, 0);
 
@@ -203,8 +206,8 @@ final class effective_deadline_resolver_test extends \advanced_testcase {
     }
 
     public function test_user_override_retained_when_extension_not_later(): void {
-        // User override to 3000, extension to 2500 (earlier) -> extension ignored,
-        // the user override remains the deciding mechanism.
+        // User override to 3000, extension to 2500 (earlier) -> extension ignored,.
+        // The user override remains the deciding mechanism.
         $result = $this->resolver->resolve(2800, 1000, true, 3000, [], 2500);
 
         $this->assertSame(3000, $result['effective']);
@@ -213,8 +216,8 @@ final class effective_deadline_resolver_test extends \advanced_testcase {
     }
 
     public function test_group_override_retained_when_extension_not_later(): void {
-        // Group override to 2000, extension to 1500 (earlier) -> extension ignored,
-        // the group override remains the deciding mechanism.
+        // Group override to 2000, extension to 1500 (earlier) -> extension ignored,.
+        // The group override remains the deciding mechanism.
         $groups = [['sortorder' => 1, 'duedate' => 2000]];
         $result = $this->resolver->resolve(1900, 1000, false, null, $groups, 1500);
 
@@ -231,7 +234,7 @@ final class effective_deadline_resolver_test extends \advanced_testcase {
         $this->assertSame(effective_deadline_resolver::CLASS_NODUEDATE, $result['classification']);
     }
 
-    // --- independent (overlapping) attribute flags ---------------------------
+    // Independent (overlapping) attribute flags.
 
     public function test_flags_user_override_plus_later_extension(): void {
         // User override to 3000, extension to 5000 (later) -> both flags set.
@@ -287,8 +290,8 @@ final class effective_deadline_resolver_test extends \advanced_testcase {
     }
 
     public function test_group_override_null_duedate_falls_back_to_assignment(): void {
-        // A selected group override with NULL duedate falls back to the plain
-        // assignment due date.
+        // A selected group override with NULL duedate falls back to the plain.
+        // Assignment due date.
         $groups = [['sortorder' => 1, 'duedate' => null]];
         $result = $this->resolver->resolve(1500, 1000, false, null, $groups, 0);
 

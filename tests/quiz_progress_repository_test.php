@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Tests for the quiz progress repository.
@@ -29,6 +29,9 @@ use PHPUnit\Framework\Attributes\CoversClass;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Tests for quiz_progress_repository_test.
+ */
 #[CoversClass(quiz_progress_repository::class)]
 final class quiz_progress_repository_test extends \advanced_testcase {
     /** @var int Counter for unique quiz_attempts.uniqueid values. */
@@ -150,7 +153,7 @@ final class quiz_progress_repository_test extends \advanced_testcase {
         $course = $this->getDataGenerator()->create_course();
         $quiz = $this->make_quiz((int) $course->id, 10.0);
         $user = $this->getDataGenerator()->create_user();
-        // first=5 (50%), then 7 (70%), then 6 (60%): best is the middle attempt.
+        // First=5 (50%), then 7 (70%), then 6 (60%): best is the middle attempt.
         $this->insert_attempt((int) $quiz->id, (int) $user->id, 1, 'finished', 5.0);
         $this->insert_attempt((int) $quiz->id, (int) $user->id, 2, 'finished', 7.0);
         $this->insert_attempt((int) $quiz->id, (int) $user->id, 3, 'finished', 6.0);
@@ -364,8 +367,8 @@ final class quiz_progress_repository_test extends \advanced_testcase {
         $course = $this->getDataGenerator()->create_course();
         $quiz = $this->make_quiz((int) $course->id, 10.0);
         $user = $this->getDataGenerator()->create_user();
-        // Both attempts finish at the same timestamp; ordering must use the
-        // attempt number, so first = attempt 1 (40%), last = attempt 2 (80%).
+        // Both attempts finish at the same timestamp; ordering must use the.
+        // Attempt number, so first = attempt 1 (40%), last = attempt 2 (80%).
         $this->insert_attempt((int) $quiz->id, (int) $user->id, 1, 'finished', 4.0, 0, 1000);
         $this->insert_attempt((int) $quiz->id, (int) $user->id, 2, 'finished', 8.0, 0, 1000);
 

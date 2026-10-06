@@ -24,13 +24,11 @@
 
 namespace local_tla\forecast;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Forecaster class for local_tla plugin.
  */
 class forecaster {
-    
     /**
      * Naive forecast (last value).
      *
@@ -46,7 +44,7 @@ class forecaster {
         $lastvalue = end($values);
         return array_fill(0, $steps, $lastvalue);
     }
-    
+
     /**
      * Seasonal naive forecast.
      *
@@ -60,22 +58,22 @@ class forecaster {
             return array_fill(0, $steps, 0);
         }
 
-        $result = array();
+        $result = [];
         $count = count($values);
-        
+
         for ($i = 0; $i < $steps; $i++) {
             $index = $count - $seasonlength + $i;
             if ($index >= 0 && $index < $count) {
                 $result[] = $values[$index];
             } else {
-                // If we don't have enough data for seasonality, fall back to naive
+                // If we don't have enough data for seasonality, fall back to naive.
                 $result[] = end($values);
             }
         }
-        
+
         return $result;
     }
-    
+
     /**
      * Moving average forecast.
      *
@@ -89,14 +87,14 @@ class forecaster {
             return array_fill(0, $steps, 0);
         }
 
-        // For multi-step forecast, we use last period's average
-        $last_values = array_slice($values, -$period);
-        $sum = array_sum($last_values);
+        // For multi-step forecast, we use last period's average.
+        $lastvalues = array_slice($values, -$period);
+        $sum = array_sum($lastvalues);
         $forecastvalue = $sum / $period;
-        
+
         return array_fill(0, $steps, $forecastvalue);
     }
-    
+
     /**
      * Exponential smoothing forecast.
      *
@@ -109,18 +107,18 @@ class forecaster {
         if (!is_array($values) || empty($values)) {
             return array_fill(0, $steps, 0);
         }
-        
-        // Calculate EMA for all values
+
+        // Calculate EMA for all values.
         $forecast = $values[0];
-        
+
         for ($i = 1; $i < count($values); $i++) {
             $forecast = $alpha * $values[$i] + (1 - $alpha) * $forecast;
         }
 
-        // For multi-step forecast, we assume the same value
+        // For multi-step forecast, we assume the same value.
         return array_fill(0, $steps, $forecast);
     }
-    
+
     /**
      * Linear trend forecast.
      *
@@ -134,25 +132,25 @@ class forecaster {
         }
 
         $n = count($values);
-        
-        // Use the existing descriptive statistics to calculate linear regression
+
+        // Use the existing descriptive statistics to calculate linear regression.
         $x = range(1, $n);
         $regression = \local_tla\statistics\descriptive::linear_regression($x, $values);
-        
+
         if ($regression === null) {
-            // Fallback to simple naive forecast if regression fails
+            // Fallback to simple naive forecast if regression fails.
             return self::naive($values, $steps);
         }
-        
+
         $slope = $regression['slope'];
         $intercept = $regression['intercept'];
-        
-        // Forecast future values using the linear trend
-        $forecast = array();
+
+        // Forecast future values using the linear trend.
+        $forecast = [];
         for ($i = 1; $i <= $steps; $i++) {
             $forecast[] = $intercept + $slope * ($n + $i);
         }
-        
+
         return $forecast;
     }
 
@@ -166,7 +164,7 @@ class forecaster {
     public static function linear($values, $steps = 1) {
         return self::linear_trend($values, $steps);
     }
-    
+
     /**
      * Get forecast statistics.
      *
@@ -175,19 +173,19 @@ class forecaster {
      */
     public static function get_statistics($values) {
         if (!is_array($values) || empty($values)) {
-            return array();
+            return [];
         }
-        
+
         $statistics = \local_tla\statistics\descriptive::calculate($values);
-        
-        // Add additional forecast statistics
+
+        // Add additional forecast statistics.
         $statistics['forecast_linear'] = self::linear($values, 1);
         $statistics['forecast_moving_average'] = self::moving_average($values, 1, 3);
         $statistics['forecast_exponential'] = self::exponential_smoothing($values, 1, 0.3);
-        
+
         return $statistics;
     }
-    
+
     /**
      * Get forecast for given history using automatic model selection based on backtest error.
      *
@@ -206,23 +204,23 @@ class forecaster {
                 'model' => 'naive',
                 'point' => array_fill(0, $horizon, 0),
                 'lower' => array_fill(0, $horizon, 0),
-                'upper' => array_fill(0, $horizon, 0)
+                'upper' => array_fill(0, $horizon, 0),
             ];
         }
-        
-        // Model names and functions
+
+        // Model names and functions.
         $models = [
             'naive' => 'naive',
             'seasonal_naive' => 'seasonal_naive',
-            'moving_average' => 'moving_average', 
+            'moving_average' => 'moving_average',
             'exponential_smoothing' => 'exponential_smoothing',
-            'linear_trend' => 'linear_trend'
+            'linear_trend' => 'linear_trend',
         ];
-        
-        // Try to backtest all models and select the best one
+
+        // Try to backtest all models and select the best one.
         $bestmodel = 'naive';
         $besterror = PHP_FLOAT_MAX;
-        
+
         foreach ($models as $name => $method) {
             $error = self::backtest($history, $horizon, $seasonlength, $method);
             if ($error < $besterror) {
@@ -230,36 +228,36 @@ class forecaster {
                 $bestmodel = $name;
             }
         }
-        
-        // Calculate forecast with best model
+
+        // Calculate forecast with best model.
         $point = self::$bestmodel($history, $horizon, $seasonlength);
-        
-        // Create lower and upper bounds using standard error  
+
+        // Create lower and upper bounds using standard error.
         $residuals = self::calculate_residuals($history, $horizon, $seasonlength, $bestmodel);
         $stddev = \local_tla\statistics\descriptive::stddev($residuals);
-        
+
         if (is_null($stddev)) {
             $stddev = 0;
         }
-        
-        // Calculate error bounds using 2 standard deviations (95% confidence)
+
+        // Calculate error bounds using 2 standard deviations (95% confidence).
         $errorbound = 2 * $stddev;
-        
-        $lower = array();
-        $upper = array();
+
+        $lower = [];
+        $upper = [];
         foreach ($point as $value) {
             $lower[] = $value - $errorbound;
             $upper[] = $value + $errorbound;
         }
-        
+
         return [
             'model' => $bestmodel,
             'point' => $point,
             'lower' => $lower,
-            'upper' => $upper
+            'upper' => $upper,
         ];
     }
-    
+
     /**
      * Backtest a model on historical data to compute error.
      *
@@ -278,27 +276,27 @@ class forecaster {
         if (count($history) < 2 * $horizon) {
             return PHP_FLOAT_MAX;
         }
-        
-        // Take the last part of history for training
+
+        // Take the last part of history for training.
         $traindata = array_slice($history, 0, - $horizon);
         $actual = array_slice($history, -$horizon);
-        
-        // Forecast using this model and calculate error
+
+        // Forecast using this model and calculate error.
         $forecast = self::$method($traindata, $horizon, $seasonlength);
-        
-        // Calculate MAE
+
+        // Calculate MAE.
         if (empty($forecast) || count($forecast) != count($actual)) {
             return PHP_FLOAT_MAX;
         }
-        
+
         $sumerror = 0;
         for ($i = 0; $i < count($forecast); $i++) {
             $sumerror += abs($forecast[$i] - $actual[$i]);
         }
-        
+
         return $sumerror / count($forecast);
     }
-    
+
     /**
      * Calculate residuals for a model.
      *
@@ -317,20 +315,20 @@ class forecaster {
         if (count($history) < 2 * $horizon) {
             return [];
         }
-        
-        // Take the last part of history for training
+
+        // Take the last part of history for training.
         $traindata = array_slice($history, 0, - $horizon);
         $actual = array_slice($history, -$horizon);
-        
-        // Forecast using this model
+
+        // Forecast using this model.
         $forecast = self::$method($traindata, $horizon, $seasonlength);
-        
-        // Calculate residuals (actual - forecast)
-        $residuals = array();
+
+        // Calculate residuals (actual - forecast).
+        $residuals = [];
         for ($i = 0; $i < count($forecast); $i++) {
             $residuals[] = $actual[$i] - $forecast[$i];
         }
-        
+
         return $residuals;
     }
 }

@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Machine-readable course quality report.
@@ -29,7 +29,6 @@ use local_tla\indicator\score_distribution_interpreter;
 use local_tla\repository\course_grade_repository;
 use local_tla\repository\course_dose_response_repository;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Aggregate the dashboard analyzers into a typed list of findings.

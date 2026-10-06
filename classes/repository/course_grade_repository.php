@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Read-only course gradebook repository.
@@ -27,7 +27,6 @@ namespace local_tla\repository;
 use local_tla\indicator\score_distribution_analyzer;
 use local_tla\indicator\attempt_progress_analyzer;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Read-only access to gradebook-based score distributions.
@@ -114,9 +113,9 @@ final class course_grade_repository {
             'mod'
         );
 
-        // Grade items joined to their live course module, with the activity
-        // name resolved in the same query via module-specific left joins (one
-        // per supported module). No per-item queries and no modinfo lookups.
+        // Grade items joined to their live course module, with the activity.
+        // Name resolved in the same query via module-specific left joins (one.
+        // Per supported module). No per-item queries and no modinfo lookups.
         $sql = "SELECT gi.id AS itemid,
                        gi.itemmodule AS module,
                        gi.iteminstance AS instanceid,

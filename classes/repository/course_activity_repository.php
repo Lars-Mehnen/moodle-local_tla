@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Course activity data access.
@@ -26,7 +26,6 @@ namespace local_tla\repository;
 
 use local_tla\assignment\effective_deadline_resolver;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Read-only repository for course activity data.
@@ -520,9 +519,9 @@ final class course_activity_repository {
                 $summary['submitted']++;
                 $summary[$result['classification']]++;
 
-                // Mechanism counters are independent attributes and may overlap:
-                // a submission whose base deadline came from an override and was
-                // then extended counts under both the override and extended.
+                // Mechanism counters are independent attributes and may overlap:.
+                // A submission whose base deadline came from an override and was.
+                // Then extended counts under both the override and extended.
                 if ($result['useduseroverride']) {
                     $summary['useroverride']++;
                 }

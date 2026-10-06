@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Tests for the course activity repository.
@@ -29,6 +29,9 @@ use PHPUnit\Framework\Attributes\CoversClass;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Tests for course_activity_repository_test.
+ */
 #[CoversClass(course_activity_repository::class)]
 final class course_activity_repository_test extends \advanced_testcase {
     public function test_invalid_parameters(): void {
@@ -664,9 +667,9 @@ final class course_activity_repository_test extends \advanced_testcase {
         ]);
         $daystart = self::day_start();
 
-        // Group override sets an earlier base deadline, an extension then pushes
-        // it back past the submission time. The submission must count under BOTH
-        // groupoverride and extended (overlapping attributes), and be on time.
+        // Group override sets an earlier base deadline, an extension then pushes.
+        // It back past the submission time. The submission must count under BOTH.
+        // Groupoverride and extended (overlapping attributes), and be on time.
         $assignmentid = $this->insert_assignment((int) $course->id, $daystart + 1800);
         $this->insert_group_override($assignmentid, (int) $group->id, 1, $daystart + 900);
         $this->insert_extension($assignmentid, (int) $user->id, $daystart + 7200);
@@ -702,8 +705,8 @@ final class course_activity_repository_test extends \advanced_testcase {
         $noduedate = $this->insert_assignment((int) $course->id, 0);
         $this->insert_assignment_submission($noduedate, 103, $daystart + 1800);
 
-        // Unresolved: user in two groups, each with a group override sharing the
-        // lowest sortorder on the same assignment.
+        // Unresolved: user in two groups, each with a group override sharing the.
+        // Lowest sortorder on the same assignment.
         $user = $this->getDataGenerator()->create_user();
         $this->getDataGenerator()->enrol_user((int) $user->id, (int) $course->id);
         $groupa = $this->getDataGenerator()->create_group(['courseid' => $course->id]);
@@ -904,6 +907,9 @@ final class course_activity_repository_test extends \advanced_testcase {
         ]);
     }
 
+    /**
+     * Insert a standard log record for the tests.
+     */
     private function insert_log_record(
         int $courseid,
         int $userid,
@@ -940,6 +946,9 @@ final class course_activity_repository_test extends \advanced_testcase {
         $DB->insert_record('logstore_standard_log', $record);
     }
 
+    /**
+     * Return a fixed day-start timestamp for the tests.
+     */
     private static function day_start(): int {
         return gmmktime(0, 0, 0, 1, 15, 2026);
     }

@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignoreFile
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -8,11 +9,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Database-free developer checks. CLI only; NEVER included by the runtime.
@@ -53,13 +54,13 @@ use local_tla\tests\assessment_design_cases;
 
 $assertions = 0;
 $checks = 0;
-$check = static function(bool $condition, string $message) use (&$assertions): void {
+$check = static function (bool $condition, string $message) use (&$assertions): void {
     $assertions++;
     if (!$condition) {
         throw new RuntimeException($message);
     }
 };
-$loadstrings = static function(string $file): array {
+$loadstrings = static function (string $file): array {
     $string = [];
     require($file);
     return $string;
@@ -97,11 +98,13 @@ foreach (assessment_design_cases::cases() as $label => [$input, $code, $status])
 }
 
 // Negative-boundary cases prevent overclaiming the absence of retry access.
-foreach ([
+foreach (
+    [
     'delay below window' => assessment_design_cases::quiz(['timeopen' => 100, 'timeclose' => 300, 'delay1' => 199]),
     'no known opening' => assessment_design_cases::quiz(['timeclose' => 300, 'delay1' => 400]),
     'no known closing' => assessment_design_cases::quiz(['timeopen' => 100, 'delay1' => 400]),
-] as $label => $input) {
+    ] as $label => $input
+) {
     $codes = array_column($analyzer->analyze($input)['findings'], 'code');
     $check(!in_array('quiz_retry_window', $codes, true), $label);
     $checks++;
@@ -143,8 +146,10 @@ $checks++;
 echo "PASS small-group suppression preserved\n";
 $configs = [$analyzer->analyze(assessment_design_cases::quiz()),
     $analyzer->analyze(assessment_design_cases::assignment(['attemptreopenmethod' => 'untilpass']))];
-$result = $interpreter->interpret([['cmid' => 101, 'analysis' => $ceiling], ['cmid' => 102, 'analysis' => $ceiling]],
-    ['checkedat' => 100, 'activities' => $configs]);
+$result = $interpreter->interpret(
+    [['cmid' => 101, 'analysis' => $ceiling], ['cmid' => 102, 'analysis' => $ceiling]],
+    ['checkedat' => 100, 'activities' => $configs]
+);
 $check($result[0]['interpretation']['code'] === 'ceiling_best', 'Quiz cmid match');
 $check($result[1]['interpretation']['code'] === 'ceiling_untilpass', 'Assignment cmid match');
 $checks++;
@@ -161,7 +166,7 @@ $DB = new class {
 };
 $quiz = assessment_design_cases::quiz();
 $assign = assessment_design_cases::assignment();
-$asrecord = static function(array $row): object {
+$asrecord = static function (array $row): object {
     $data = array_merge($row, $row['settings']);
     unset($data['settings'], $data['module']);
     $data['userid'] = 888888;
@@ -196,10 +201,12 @@ $check($thrown, 'Invalid course rejected');
 $checks++;
 echo "PASS invalid course id rejected\n";
 
-// Note: parameterization_advisor.php is intentionally KEPT (as a gated
-// recommendation), unlike the penalty simulator and demo generator.
-foreach (['classes/indicator/late_penalty_simulator.php',
-        'classes/local/demo_data.php', 'tools/create_demo_data.php'] as $removed) {
+// Note: parameterization_advisor.php is intentionally KEPT (as a gated.
+// Recommendation), unlike the penalty simulator and demo generator.
+foreach (
+    ['classes/indicator/late_penalty_simulator.php',
+        'classes/local/demo_data.php', 'tools/create_demo_data.php'] as $removed
+) {
     $check(!file_exists($root . '/' . $removed), 'Removed production file still present: ' . $removed);
 }
 $checks++;

@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Unit tests for conservative assessment-design rules.
@@ -32,9 +32,16 @@ use PHPUnit\Framework\Attributes\DataProvider;
 defined('MOODLE_INTERNAL') || die();
 require_once(__DIR__ . '/fixtures/assessment_design_cases.php');
 
+/**
+ * Tests for assessment_design_analyzer_test.
+ */
 #[CoversClass(assessment_design_analyzer::class)]
 final class assessment_design_analyzer_test extends \advanced_testcase {
-    /** @return array Named rule cases. */
+    /**
+     * Data provider of named assessment-design rule cases.
+     *
+     * @return array Named rule cases.
+     */
     public static function rule_cases(): array {
         return assessment_design_cases::cases();
     }

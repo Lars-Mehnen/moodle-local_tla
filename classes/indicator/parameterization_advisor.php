@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Quiz parameterization advisor.
@@ -24,7 +24,6 @@
 
 namespace local_tla\indicator;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Recommend how much per-student randomization a quiz needs.
@@ -82,8 +81,10 @@ final class parameterization_advisor {
 
         // Smallest number of parameters whose max value space covers the target.
         $params = 1;
-        while (($this->pow_int(self::MAX_VALUES_PER_PARAM, $params)) < $target
-                && $params < self::MAX_PARAMS) {
+        while (
+            ($this->pow_int(self::MAX_VALUES_PER_PARAM, $params)) < $target
+                && $params < self::MAX_PARAMS
+        ) {
             $params++;
         }
         // Values per parameter so that valuesperparam^params >= target.

@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * External function: course quality report.
@@ -30,7 +30,6 @@ use core_external\external_single_structure;
 use core_external\external_multiple_structure;
 use core_external\external_value;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Return the machine-readable course quality report for a course.
@@ -77,8 +76,11 @@ final class get_course_quality_report extends external_api {
         require_capability('local/tla:view', $context);
 
         $configuredminimum = get_config('local_tla', 'min_observations');
-        $minimum = max(1, (int) $params['minobservations'],
-            $configuredminimum === false ? 8 : (int) $configuredminimum);
+        $minimum = max(
+            1,
+            (int) $params['minobservations'],
+            $configuredminimum === false ? 8 : (int) $configuredminimum
+        );
 
         $report = (new \local_tla\service\course_quality_report())->generate(
             $params['courseid'],

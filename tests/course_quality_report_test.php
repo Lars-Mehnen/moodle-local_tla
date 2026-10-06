@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Tests for the course quality report aggregator.
@@ -29,6 +29,9 @@ use PHPUnit\Framework\Attributes\CoversClass;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Tests for course_quality_report_test.
+ */
 #[CoversClass(course_quality_report::class)]
 final class course_quality_report_test extends \advanced_testcase {
     /**
@@ -108,8 +111,8 @@ final class course_quality_report_test extends \advanced_testcase {
         $this->resetAfterTest(true);
 
         $course = $this->getDataGenerator()->create_course();
-        // Single-attempt quiz: no retry mechanism explains a ceiling -> gated
-        // parameterization recommendation.
+        // Single-attempt quiz: no retry mechanism explains a ceiling -> gated.
+        // Parameterization recommendation.
         $quiz = $this->getDataGenerator()->create_module('quiz', [
             'course' => $course->id,
             'grade' => 100,

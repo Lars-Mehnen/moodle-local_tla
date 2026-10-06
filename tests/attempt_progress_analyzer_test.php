@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Tests for the attempt progress analyzer.
@@ -29,6 +29,9 @@ use PHPUnit\Framework\Attributes\CoversClass;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Tests for attempt_progress_analyzer_test.
+ */
 #[CoversClass(attempt_progress_analyzer::class)]
 final class attempt_progress_analyzer_test extends \advanced_testcase {
     /** @var attempt_progress_analyzer Analyzer under test. */
@@ -108,9 +111,9 @@ final class attempt_progress_analyzer_test extends \advanced_testcase {
 
     public function test_mixed(): void {
         $participants = array_merge(
-            self::cohort(40.0, 70.0, 3),  // improved (+30)
-            self::cohort(70.0, 40.0, 3),  // declined (-30)
-            self::cohort(50.0, 50.0, 2)   // stable
+            self::cohort(40.0, 70.0, 3), // Improved (+30).
+            self::cohort(70.0, 40.0, 3), // Declined (-30).
+            self::cohort(50.0, 50.0, 2) // Stable.
         );
         $result = $this->analyzer->analyze($participants, 8);
 
@@ -170,9 +173,9 @@ final class attempt_progress_analyzer_test extends \advanced_testcase {
 
     public function test_median_change_is_correct(): void {
         $participants = [
-            self::p(40.0, 50.0),  // +10
-            self::p(40.0, 60.0),  // +20
-            self::p(40.0, 70.0),  // +30
+            self::p(40.0, 50.0), // Change +10.
+            self::p(40.0, 60.0), // Change +20.
+            self::p(40.0, 70.0), // Change +30.
         ];
         $result = $this->analyzer->analyze($participants, 3);
 

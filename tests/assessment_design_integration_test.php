@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Moodle integration checks for consistent reports, API protection and paging.
@@ -35,6 +35,9 @@ use PHPUnit\Framework\Attributes\CoversClass;
 defined('MOODLE_INTERNAL') || die();
 require_once(__DIR__ . '/fixtures/assessment_design_cases.php');
 
+/**
+ * Tests for assessment_design_integration_test.
+ */
 #[CoversClass(get_course_quality_report::class)]
 #[CoversClass(assessment_design_presenter::class)]
 final class assessment_design_integration_test extends \advanced_testcase {
@@ -102,8 +105,10 @@ final class assessment_design_integration_test extends \advanced_testcase {
                 'name' => 'SQL &amp; Joins',
             ])),
         ]];
-        $view = (new assessment_design_presenter())->export($snapshot,
-            new \moodle_url('/local/tla/assessment_design.php', ['id' => 2]));
+        $view = (new assessment_design_presenter())->export(
+            $snapshot,
+            new \moodle_url('/local/tla/assessment_design.php', ['id' => 2])
+        );
         $this->assertSame('SQL & Joins', $view['activities'][0]['name']);
     }
 
@@ -127,8 +132,11 @@ final class assessment_design_integration_test extends \advanced_testcase {
         $this->assertFalse($first['hasprevious']);
         $this->assertTrue($first['hasnext']);
         $this->assertFalse($last['hasnext']);
-        $ids = array_merge(array_column($first['activities'], 'cmid'),
-            array_column($second['activities'], 'cmid'), array_column($last['activities'], 'cmid'));
+        $ids = array_merge(
+            array_column($first['activities'], 'cmid'),
+            array_column($second['activities'], 'cmid'),
+            array_column($last['activities'], 'cmid')
+        );
         $this->assertSame(range(1, 45), $ids);
         $empty = $presenter->export(['checkedat' => 100, 'activities' => []], $url, 999);
         $this->assertFalse($empty['hasactivities']);

@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Tests for the course gradebook repository.
@@ -29,6 +29,9 @@ use PHPUnit\Framework\Attributes\CoversClass;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Tests for course_grade_repository_test.
+ */
 #[CoversClass(course_grade_repository::class)]
 final class course_grade_repository_test extends \advanced_testcase {
     /**
@@ -270,7 +273,7 @@ final class course_grade_repository_test extends \advanced_testcase {
             'grade' => 100,
         ]);
         $itemid = $this->grade_item_id('assign', (int) $assign->id, (int) $course->id);
-        // grademax 100, a finalgrade of 150 is far out of range -> invalid.
+        // Grademax 100, a finalgrade of 150 is far out of range -> invalid.
         $this->add_grades($itemid, [50.0, 150.0]);
 
         $result = (new course_grade_repository())
@@ -422,8 +425,8 @@ final class course_grade_repository_test extends \advanced_testcase {
         $repository->get_activity_score_distributions((int) $large->id, 1);
         $largereads = $DB->perf_get_reads() - $before;
 
-        // The read count must not grow with the number of activities: the data
-        // is loaded in a fixed, bundled set of queries (no per-activity lookup).
+        // The read count must not grow with the number of activities: the data.
+        // Is loaded in a fixed, bundled set of queries (no per-activity lookup).
         $this->assertSame($smallreads, $largereads);
         $this->assertLessThanOrEqual(4, $largereads);
     }
@@ -453,7 +456,7 @@ final class course_grade_repository_test extends \advanced_testcase {
         $this->assertArrayNotHasKey('userid', $activity['analysis']);
     }
 
-    // --- Analysis B: course progress ----------------------------------------
+    // Analysis B: course progress.
 
     /**
      * Create a graded assignment with a due date and return [module, itemid].
@@ -529,8 +532,8 @@ final class course_grade_repository_test extends \advanced_testcase {
         $this->resetAfterTest(true);
 
         $course = $this->getDataGenerator()->create_course();
-        // Later-deadline activity is created first to prove ordering uses the
-        // deadline, not creation order.
+        // Later-deadline activity is created first to prove ordering uses the.
+        // Deadline, not creation order.
         [, $late] = $this->make_graded_assign((int) $course->id, 2000);
         [, $early] = $this->make_graded_assign((int) $course->id, 1000);
         $user = $this->getDataGenerator()->create_user();
@@ -576,7 +579,7 @@ final class course_grade_repository_test extends \advanced_testcase {
             ->get_course_progress((int) $course->id, 1);
 
         $this->assertSame(1, $result['participants']);
-        // first 50%, last 60% -> +10.
+        // First 50%, last 60% -> +10.
         $this->assertEqualsWithDelta(10.0, $result['medianchange'], 1e-9);
     }
 
@@ -652,8 +655,8 @@ final class course_grade_repository_test extends \advanced_testcase {
         $result = (new course_grade_repository())
             ->get_course_progress((int) $course->id, 1);
 
-        // A computed course-level improvement is only a context hint: the status
-        // is "improving" but the severity is capped at yellow, never green.
+        // A computed course-level improvement is only a context hint: the status.
+        // Is "improving" but the severity is capped at yellow, never green.
         $this->assertSame('improving', $result['status']);
         $this->assertSame('yellow', $result['severity']);
     }
@@ -671,8 +674,8 @@ final class course_grade_repository_test extends \advanced_testcase {
         $result = (new course_grade_repository())
             ->get_course_progress((int) $course->id, 1);
 
-        // A computed decline across different activities is capped at yellow,
-        // because differing difficulty can also cause an apparent drop.
+        // A computed decline across different activities is capped at yellow,.
+        // Because differing difficulty can also cause an apparent drop.
         $this->assertSame('declining', $result['status']);
         $this->assertSame('yellow', $result['severity']);
     }

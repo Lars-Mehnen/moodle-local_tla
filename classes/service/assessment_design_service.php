@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Shared assessment-design snapshot for dashboard and external report.
@@ -27,14 +27,19 @@ namespace local_tla\service;
 use local_tla\indicator\assessment_design_analyzer;
 use local_tla\repository\assessment_design_repository;
 
-defined('MOODLE_INTERNAL') || die();
 
-/** No student-observation threshold: this service analyses configuration only. */
+/**
+ * Configuration-only analysis service, with no student-observation threshold.
+ */
 final class assessment_design_service {
     /** @var assessment_design_repository Settings reader. */
     private assessment_design_repository $repository;
 
-    /** @param assessment_design_repository|null $repository Optional reader. */
+    /**
+     * Constructor.
+     *
+     * @param assessment_design_repository|null $repository Optional reader.
+     */
     public function __construct(?assessment_design_repository $repository = null) {
         $this->repository = $repository ?? new assessment_design_repository();
     }

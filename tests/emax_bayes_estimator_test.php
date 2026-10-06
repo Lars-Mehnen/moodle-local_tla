@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Tests for the Bayesian Emax estimator.
@@ -29,6 +29,9 @@ use PHPUnit\Framework\Attributes\CoversClass;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Tests for emax_bayes_estimator_test.
+ */
 #[CoversClass(emax_bayes_estimator::class)]
 final class emax_bayes_estimator_test extends \advanced_testcase {
     /** @var emax_bayes_estimator Estimator under test. */
@@ -105,13 +108,13 @@ final class emax_bayes_estimator_test extends \advanced_testcase {
             $this->assertGreaterThanOrEqual(0.0, $point['med']);
             $this->assertLessThanOrEqual(100.0, $point['hi']);
             // The saturating mean curve is non-decreasing with more exposure.
-            // Each point's median is a weighted quantile estimated independently
-            // on a discrete grid, so tiny (< 1 point) numerical jitter is allowed
-            // on the flat, saturated part of the curve.
+            // Each point's median is a weighted quantile estimated independently.
+            // On a discrete grid, so tiny (< 1 point) numerical jitter is allowed.
+            // On the flat, saturated part of the curve.
             $this->assertGreaterThanOrEqual($prev - 1.0, $point['med']);
             $prev = $point['med'];
-            // The 80% band brackets the median: lo <= med <= hi (small tolerance
-            // for independent per-point quantile jitter on the discrete grid).
+            // The 80% band brackets the median: lo <= med <= hi (small tolerance.
+            // For independent per-point quantile jitter on the discrete grid).
             $this->assertGreaterThanOrEqual($point['lo'] - 1.0, $point['med']);
             $this->assertLessThanOrEqual($point['hi'] + 1.0, $point['med']);
         }

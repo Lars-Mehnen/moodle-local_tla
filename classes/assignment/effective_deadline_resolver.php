@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Effective per-user assignment deadline resolver.
@@ -24,7 +24,6 @@
 
 namespace local_tla\assignment;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Resolves the effective deadline for a single individual assignment submission
@@ -138,11 +137,11 @@ final class effective_deadline_resolver {
                 $candidate = $useroverrideduedate;
                 $mechanism = self::MECH_USEROVERRIDE;
             } else {
-                // Core: user row present but duedate NULL -> merged value NULL ->
-                // isset() false -> assignment default is used, group value discarded.
+                // Core: user row present but duedate NULL -> merged value NULL ->.
+                // Isset() false -> assignment default is used, group value discarded.
                 $candidate = null;
-                // The user-override row was decisive only where it actually
-                // discarded a group override; otherwise it changed nothing.
+                // The user-override row was decisive only where it actually.
+                // Discarded a group override; otherwise it changed nothing.
                 $mechanism = $groupwouldapply ? self::MECH_USEROVERRIDE : null;
             }
         }
@@ -156,13 +155,13 @@ final class effective_deadline_resolver {
             }
         }
 
-        // Independent attribute flags: which mechanism decided the BASE deadline
+        // Independent attribute flags: which mechanism decided the BASE deadline.
         // (before any extension). These may overlap with usedextension below.
         $useduseroverride = $mechanism === self::MECH_USEROVERRIDE;
         $usedgroupoverride = $mechanism === self::MECH_GROUPOVERRIDE;
 
-        // Extension only moves an existing deadline strictly later. It is an
-        // independent attribute: it does not erase the base-override attribute.
+        // Extension only moves an existing deadline strictly later. It is an.
+        // Independent attribute: it does not erase the base-override attribute.
         $usedextension = false;
         if ($extensionduedate > 0 && $effective > 0 && $extensionduedate > $effective) {
             $effective = $extensionduedate;

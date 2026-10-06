@@ -47,7 +47,7 @@ final class score_distribution_analyzer_test extends \advanced_testcase {
      *
      * @param float $value Value.
      * @param int $count Repeat count.
-     * @return array<int, float>
+     * @return array
      */
     private static function repeat(float $value, int $count): array {
         return array_fill(0, $count, $value);

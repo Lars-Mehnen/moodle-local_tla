@@ -97,7 +97,7 @@ final class course_grade_repository_test extends \advanced_testcase {
      * Add $count grades to an item, one per fresh user.
      *
      * @param int $itemid Grade item id.
-     * @param array<int, float|null> $grades Grade values.
+     * @param array $grades Grade values.
      */
     private function add_grades(int $itemid, array $grades): void {
         foreach ($grades as $grade) {
@@ -463,7 +463,7 @@ final class course_grade_repository_test extends \advanced_testcase {
      *
      * @param int $courseid Course id.
      * @param int $duedate Due date timestamp (for ordering).
-     * @return array{0: \stdClass, 1: int}
+     * @return array
      */
     private function make_graded_assign(int $courseid, int $duedate): array {
         $assign = $this->getDataGenerator()->create_module('assign', [

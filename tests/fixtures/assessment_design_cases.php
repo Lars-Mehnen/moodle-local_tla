@@ -28,7 +28,13 @@ namespace local_tla\tests;
 
 /** Test fixtures only. Never loaded by dashboard or external functions. */
 final class assessment_design_cases {
-    /** @return array A quiz configuration row; overrides are setting changes. */
+    /**
+     * A quiz configuration row; overrides are setting changes.
+     *
+     * @param array $changes Setting overrides merged into the default settings.
+     * @param array $flags Top-level flag overrides merged into the row.
+     * @return array The quiz configuration row.
+     */
     public static function quiz(array $changes = [], array $flags = []): array {
         return array_replace([
             'cmid' => 101, 'instanceid' => 1, 'module' => 'quiz', 'name' => 'SQL practice',
@@ -43,7 +49,13 @@ final class assessment_design_cases {
         ], $flags);
     }
 
-    /** @return array An assignment configuration row. */
+    /**
+     * An assignment configuration row.
+     *
+     * @param array $changes Setting overrides merged into the default settings.
+     * @param array $flags Top-level flag overrides merged into the row.
+     * @return array The assignment configuration row.
+     */
     public static function assignment(array $changes = [], array $flags = []): array {
         return array_replace([
             'cmid' => 102, 'instanceid' => 1, 'module' => 'assign', 'name' => 'Assignment',

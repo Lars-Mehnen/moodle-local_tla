@@ -85,7 +85,7 @@ final class effective_deadline_resolver {
      *        user and assignment.
      * @param int|null $useroverrideduedate The user override duedate column
      *        (null when the row exists but the column is not set).
-     * @param array<int, array{sortorder: int|null, duedate: int|null}> $groupoverrides
+     * @param array $groupoverrides
      *        Group overrides that apply to this user for this assignment (already
      *        filtered to the user's groups). May be empty.
      * @param int $extensionduedate assign_user_flags.extensionduedate (0 = none).
@@ -200,8 +200,8 @@ final class effective_deadline_resolver {
      * Mirrors core: ORDER BY sortorder ASC, first row wins (IGNORE_MULTIPLE).
      * A tie on the lowest sortorder is flagged as ambiguous.
      *
-     * @param array<int, array{sortorder: int|null, duedate: int|null}> $rows
-     * @return array{row: array{sortorder: int|null, duedate: int|null}|null, ambiguous: bool}
+     * @param array $rows
+     * @return array
      */
     private static function pick_group_override(array $rows): array {
         if (count($rows) === 0) {

@@ -49,7 +49,7 @@ final class attempt_progress_analyzer_test extends \advanced_testcase {
      * @param float $last Last-attempt percentage.
      * @param float|null $best Best percentage (defaults to max of first/last).
      * @param int $attempts Attempt count.
-     * @return array{first: float, last: float, best: float, attempts: int}
+     * @return array
      */
     private static function p(float $first, float $last, ?float $best = null, int $attempts = 2): array {
         return [
@@ -66,7 +66,7 @@ final class attempt_progress_analyzer_test extends \advanced_testcase {
      * @param float $first First percentage.
      * @param float $last Last percentage.
      * @param int $count Number of participants.
-     * @return array<int, array>
+     * @return array
      */
     private static function cohort(float $first, float $last, int $count): array {
         return array_fill(0, $count, self::p($first, $last));

@@ -42,7 +42,7 @@ final class course_activity_repository {
      * @param int $courseid Course ID.
      * @param int $timestart Inclusive Unix timestamp.
      * @param int $timeend Exclusive Unix timestamp.
-     * @return array<int, array{daystart: int, eventcount: int}>
+     * @return array
      * @throws \invalid_parameter_exception If a parameter is invalid.
      */
     public function get_events_per_day(
@@ -109,7 +109,7 @@ final class course_activity_repository {
      * @param int $courseid Course ID.
      * @param int $timestart Inclusive Unix timestamp.
      * @param int $timeend Exclusive Unix timestamp.
-     * @return array<int, array{daystart: int, activeusers: int}>
+     * @return array
      * @throws \invalid_parameter_exception If a parameter is invalid.
      */
     public function get_active_users_per_day(
@@ -174,7 +174,7 @@ final class course_activity_repository {
      * @param int $courseid Course ID.
      * @param int $timestart Inclusive Unix timestamp.
      * @param int $timeend Exclusive Unix timestamp.
-     * @return array<int, array{component: string, eventcount: int}>
+     * @return array
      * @throws \invalid_parameter_exception If a parameter is invalid.
      */
     public function get_module_events(
@@ -254,7 +254,7 @@ final class course_activity_repository {
      * @param int $courseid Course ID.
      * @param int $timestart Inclusive Unix timestamp.
      * @param int $timeend Exclusive Unix timestamp.
-     * @return array{submitted: int, ontime: int, late: int, noduedate: int}
+     * @return array
      * @throws \invalid_parameter_exception If a parameter is invalid.
      */
     public function get_individual_assignment_submission_summary(

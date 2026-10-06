@@ -909,6 +909,11 @@ final class course_activity_repository_test extends \advanced_testcase {
 
     /**
      * Insert a standard log record for the tests.
+     *
+     * @param int $courseid Course ID for the log record.
+     * @param int $userid User ID for the log record.
+     * @param int $timecreated Unix timestamp of the event.
+     * @param string $component Event component (defaults to 'core').
      */
     private function insert_log_record(
         int $courseid,

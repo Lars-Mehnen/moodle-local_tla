@@ -47,7 +47,7 @@ final class traffic_light_calculator {
      * @param float $yellowthreshold Yellow threshold between 0 and 1.
      * @param float $redthreshold Red threshold between 0 and 1.
      * @param int $minobservations Minimum denominator required.
-     * @return array{status: string, rate: float|null, numerator: int, denominator: int}
+     * @return array
      * @throws \invalid_parameter_exception For invalid parameters.
      */
     public function calculate(

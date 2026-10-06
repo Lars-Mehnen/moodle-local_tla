@@ -123,7 +123,7 @@ final class parameterization_advisor {
      * @param int $cohortn Cohort size.
      * @param int $target Target variant count.
      * @param int $variants Provided variant count.
-     * @param array<int, array{name: string, lo: int, hi: int}> $ranges Parameter ranges.
+     * @param array $ranges Parameter ranges.
      * @return string Twig snippet.
      */
     private function build_snippet(int $cohortn, int $target, int $variants, array $ranges): string {

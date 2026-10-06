@@ -94,7 +94,7 @@ final class score_distribution_analyzer {
      * one-sided ceiling/floor effects):
      * unknown -> ushape -> ceiling -> floor -> middle -> mixed.
      *
-     * @param array<int, float|int> $percentages Validated grades in [0, 100].
+     * @param array $percentages Validated grades in [0, 100].
      * @param int $minobservations Minimum count for a classification (>= 1).
      * @return array{
      *     status: string,
@@ -216,7 +216,7 @@ final class score_distribution_analyzer {
      * @param float $highshare Share above 80 percent.
      * @param float $extremeshare Combined low and high share.
      * @param float $median Median percentage.
-     * @return array{0: string, 1: string} Status and severity.
+     * @return array Status and severity.
      */
     private function classify(
         float $lowshare,
@@ -262,8 +262,8 @@ final class score_distribution_analyzer {
      * Bins are [0,10), [10,20), ..., [80,90), [90,100]; the value 100 falls in
      * the last bin.
      *
-     * @param array<int, float|int> $values Validated grades in [0, 100].
-     * @return array<int, array{from: int, to: int, count: int, percentage: float}>
+     * @param array $values Validated grades in [0, 100].
+     * @return array
      */
     private function build_histogram(array $values): array {
         $counts = array_fill(0, self::BINS, 0);

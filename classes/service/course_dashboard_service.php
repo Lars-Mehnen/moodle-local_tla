@@ -85,33 +85,11 @@ final class course_dashboard_service {
      * @param int $courseid Course ID.
      * @param int $timestart Inclusive Unix timestamp.
      * @param int $timeend Exclusive Unix timestamp.
-     * @return array{
-     *     courseid: int,
-     *     timestart: int,
-     *     timeend: int,
-     *     eventsperday: array,
-     *     activeusersperday: array,
-     *     moduleevents: array,
-     *     assignmentsubmissions: array{
-     *         submitted: int,
-     *         ontime: int,
-     *         late: int,
-     *         noduedate: int,
-     *         extended: int,
-     *         useroverride: int,
-     *         groupoverride: int,
-     *         unresolved: int
-     *     },
-     *     scoredistributions: array,
-     *     quizprogress: array,
-     *     courseprogress: array,
-     *     assessmentdesign: array,
-     *     doseresponse: array
-     * }
-     * @param int $courseid Course ID.
-     * @param int $timestart Inclusive Unix timestamp.
-     * @param int $timeend Exclusive Unix timestamp.
      * @param int $minobservations Minimum valid grades for a classification.
+     * @return array Baseline dashboard data keyed by section (courseid, timestart,
+     *     timeend, eventsperday, activeusersperday, moduleevents,
+     *     assignmentsubmissions, scoredistributions, quizprogress, courseprogress,
+     *     assessmentdesign, doseresponse).
      * @throws \invalid_parameter_exception If a parameter is invalid.
      */
     public function get_course_dashboard_data(

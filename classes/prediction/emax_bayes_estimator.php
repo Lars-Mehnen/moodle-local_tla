@@ -86,7 +86,7 @@ final class emax_bayes_estimator {
      *
      * Below $minobservations pairs no fit is attempted and status is 'unknown'.
      *
-     * @param array<int, array{c: float|int, e: float|int}> $observations
+     * @param array $observations
      * @param int $minobservations Minimum observations for a fit (>= 1).
      * @return array{
      *     status: string,
@@ -338,9 +338,9 @@ final class emax_bayes_estimator {
      * Aggregate mean effect per integer exposure value, honouring a small-group
      * threshold so no near-individual value is exposed on the plot.
      *
-     * @param array<int, float> $cvals Exposure values.
-     * @param array<int, float> $evals Effect values.
-     * @return array<int, array{c: float, meaneffect: float, count: int}>
+     * @param array $cvals Exposure values.
+     * @param array $evals Effect values.
+     * @return array
      */
     private static function bin_means(array $cvals, array $evals): array {
         $sum = [];
@@ -368,11 +368,11 @@ final class emax_bayes_estimator {
     /**
      * Decide the fit quality and the (fit-reliability, not teaching-quality) severity.
      *
-     * @param array{median: float|null, lo: float|null, hi: float|null} $emaxsummary
+     * @param array $emaxsummary
      * @param float $repsdmedian Posterior median of the model's predicted result spread.
      * @param float $obssd Observed standard deviation of the effect.
      * @param float $explained Share of the effect variance the curve explains (0..1).
-     * @return array{0: string, 1: string} Fit quality and severity.
+     * @return array Fit quality and severity.
      */
     private static function classify_fit(
         array $emaxsummary,
@@ -412,9 +412,9 @@ final class emax_bayes_estimator {
     /**
      * Summarise a marginal posterior (median plus a 5th/95th credible interval).
      *
-     * @param array<int, float> $values Grid values.
-     * @param array<int, float> $weights Marginal weights.
-     * @return array{median: float, lo: float, hi: float, mean: float}
+     * @param array $values Grid values.
+     * @param array $weights Marginal weights.
+     * @return array
      */
     private static function summary(array $values, array $weights): array {
         $total = array_sum($weights);
@@ -436,8 +436,8 @@ final class emax_bayes_estimator {
     /**
      * Weighted quantile via linear interpolation of the weighted CDF.
      *
-     * @param array<int, float> $values Values (need not be sorted).
-     * @param array<int, float> $weights Non-negative weights, same length.
+     * @param array $values Values (need not be sorted).
+     * @param array $weights Non-negative weights, same length.
      * @param float $q Quantile in [0, 1].
      * @return float Interpolated quantile (0.0 if there is no positive weight).
      */
@@ -480,8 +480,8 @@ final class emax_bayes_estimator {
      * good fit at any sample size and only becomes extreme for a genuine spread
      * mismatch.
      *
-     * @param array<int, float> $sigmatot Per-cell model spread sqrt(Var(mu)+sigma^2).
-     * @param array<int, float> $weights Non-negative posterior weights.
+     * @param array $sigmatot Per-cell model spread sqrt(Var(mu)+sigma^2).
+     * @param array $weights Non-negative posterior weights.
      * @param float $obssd Observed standard deviation of the effect.
      * @param int $n Number of observations.
      * @return float Probability in [0, 1] (0.5 if there is no positive weight).
@@ -536,7 +536,7 @@ final class emax_bayes_estimator {
      * a sensible length for very large exposure ranges.
      *
      * @param float $cmax Largest observed exposure (> 0).
-     * @return array<int, float>
+     * @return array
      */
     private static function integer_grid(float $cmax): array {
         $top = (int) ceil($cmax);
@@ -560,7 +560,7 @@ final class emax_bayes_estimator {
      * @param float $from Start.
      * @param float $to End (>= $from).
      * @param int $steps Number of points (>= 2).
-     * @return array<int, float>
+     * @return array
      */
     private static function linspace(float $from, float $to, int $steps): array {
         $out = [];

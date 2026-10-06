@@ -71,7 +71,7 @@ final class attempt_progress_analyzer {
      * Classification order: unknown -> improving -> declining -> stable -> mixed.
      * (improving and declining are mutually exclusive at these thresholds.)
      *
-     * @param array<int, array{first: float|int, last: float|int, best: float|int, attempts: int}> $participants
+     * @param array $participants
      * @param int $minobservations Minimum participants for a classification (>= 1).
      * @return array{
      *     status: string,
@@ -211,7 +211,7 @@ final class attempt_progress_analyzer {
      * @param float $stableshare Share stable.
      * @param float $declinedshare Share declined.
      * @param float $medianchange Median change in points.
-     * @return array{0: string, 1: string} Status and severity.
+     * @return array Status and severity.
      */
     private function classify(
         float $improvedshare,

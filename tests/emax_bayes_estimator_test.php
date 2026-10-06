@@ -52,7 +52,7 @@ final class emax_bayes_estimator_test extends \advanced_testcase {
      * @param float $ec50 True half-max exposure.
      * @param float $sigma Noise amplitude.
      * @param int $n Number of observations.
-     * @return array<int, array{c: float, e: float}>
+     * @return array
      */
     private static function emax_data(float $emax, float $ec50, float $sigma, int $n = 180): array {
         $obs = [];

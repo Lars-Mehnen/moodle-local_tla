@@ -18,7 +18,7 @@
  * Forecaster class for local_tla plugin.
  *
  * @package    local_tla
- * @copyright  2023 Your Name <your.email@example.com>
+ * @copyright  2026 Lars Mehnen <lars.mehnen@technikum-wien.at>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

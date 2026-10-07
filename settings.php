@@ -38,7 +38,7 @@ if ($hassiteconfig) {
         'local_tla/deadline_red',
         get_string('deadline_red', 'local_tla'),
         '',
-        '0.50',
+        '0.5',
         PARAM_FLOAT
     ));
     // Mindest-Stichprobengroesse fuer belastbare Ampeln/Prognosen.

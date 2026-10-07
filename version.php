@@ -27,5 +27,5 @@ defined('MOODLE_INTERNAL') || die();
 $plugin->component = 'local_tla';
 $plugin->release = '0.2.0-rc1';
 $plugin->version = 2026090500;
-$plugin->requires = 2026042001.00;
+$plugin->requires = 2024100700.00; // Moodle 4.5.0.
 $plugin->maturity = MATURITY_BETA;

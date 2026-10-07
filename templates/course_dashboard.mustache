@@ -1,3 +1,23 @@
+{{!
+    @template local_tla/course_dashboard
+    Course dashboard: activity, score distribution, progress and dose-response
+    sections. Aggregate figures only, no individual student rows.
+
+    Example context (json):
+    {
+        "coursefullname": "Functional Programming",
+        "periodstart": "2026-09-01",
+        "periodend": "2026-10-07",
+        "periodoptions": [
+            {"url": "https://example.com/?period=30", "active": true, "label": "30 days"}
+        ],
+        "assessmentdesignurl": "https://example.com/local/tla/assessment_design.php?id=2",
+        "totalevents": "1234",
+        "peakactiveusers": "42",
+        "moduleeventtotal": "987",
+        "submitted": "150"
+    }
+}}
 <div class="local-tla-dashboard">
     <div class="mb-4">
         <h2>{{#str}} dashboardtitle, local_tla {{/str}}</h2>

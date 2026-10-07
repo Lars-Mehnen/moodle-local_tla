@@ -64,10 +64,14 @@ final class assessment_design_repository {
            ORDER BY q.id",
             ['courseid' => $courseid]
         );
+        // The gradepenalty field was added to mod_assign in Moodle 5.0; on 4.x
+        // it does not exist, so select a constant 0 there to keep the query valid.
+        $gradepenaltyselect = $DB->get_manager()->field_exists('assign', 'gradepenalty')
+            ? 'a.gradepenalty,' : '0 AS gradepenalty,';
         $assignments = $DB->get_records_sql(
             "SELECT a.id AS instanceid, cm.id AS cmid, a.name, cm.visible,
                     a.grade, a.maxattempts, a.attemptreopenmethod, a.nosubmissions,
-                    a.submissiondrafts, a.markingworkflow, a.teamsubmission, a.gradepenalty,
+                    a.submissiondrafts, a.markingworkflow, a.teamsubmission, {$gradepenaltyselect}
                     a.allowsubmissionsfromdate, a.duedate, a.cutoffdate, a.gradingduedate,
                     gi.gradepass,
                     CASE WHEN cm.availability IS NULL THEN 0 ELSE 1 END AS hasrestrictions,

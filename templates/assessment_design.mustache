@@ -1,6 +1,35 @@
 {{!
     @template local_tla/assessment_design
     Configuration-only findings, no student rows or quality colour coding.
+
+    Example context (json):
+    {
+        "snapshotlabel": "Checked on 2026-10-07",
+        "hasactivities": true,
+        "pageinfo": "Showing 1 of 1 activities",
+        "activities": [
+            {
+                "name": "SQL practice",
+                "moduletype": "quiz",
+                "rulecount": "3 rules",
+                "hidden": false,
+                "viewurl": "https://example.com/mod/quiz/view.php?id=1",
+                "settings": [
+                    {"label": "Attempts allowed", "value": "3"}
+                ],
+                "findings": [
+                    {
+                        "criterion": "Retake policy",
+                        "statuslabel": "Review",
+                        "message": "Highest grade of multiple attempts is kept.",
+                        "action": "Consider reporting first and final attempt."
+                    }
+                ]
+            }
+        ],
+        "hasprevious": false,
+        "hasnext": false
+    }
 }}
 <section id="tla-assessment-design" class="card mb-4" aria-labelledby="tla-assessment-heading">
     <div class="card-header">

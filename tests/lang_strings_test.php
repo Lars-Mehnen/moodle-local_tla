@@ -27,6 +27,8 @@ namespace local_tla;
 
 /**
  * Tests for lang_strings_test.
+ *
+ * @coversNothing
  */
 final class lang_strings_test extends \advanced_testcase {
     /**

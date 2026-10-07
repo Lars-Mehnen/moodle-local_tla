@@ -28,15 +28,15 @@ use local_tla\indicator\assessment_design_analyzer;
 use local_tla\indicator\score_distribution_analyzer;
 use local_tla\indicator\score_distribution_interpreter;
 use local_tla\tests\assessment_design_cases;
-use PHPUnit\Framework\Attributes\CoversClass;
 
 defined('MOODLE_INTERNAL') || die();
+
 require_once(__DIR__ . '/fixtures/assessment_design_cases.php');
 
 /**
  * Tests for score_distribution_interpreter_test.
+ * @covers \local_tla\indicator\score_distribution_interpreter
  */
-#[CoversClass(score_distribution_interpreter::class)]
 final class score_distribution_interpreter_test extends \advanced_testcase {
     public function test_ceiling_with_best_attempts_is_informational(): void {
         $config = (new assessment_design_analyzer())->analyze(assessment_design_cases::quiz());

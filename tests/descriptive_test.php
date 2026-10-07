@@ -26,13 +26,12 @@ namespace local_tla;
 
 use local_tla\statistics\descriptive;
 use local_tla\forecast\forecaster;
-use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
  * Tests for descriptive_test.
+ * @covers \local_tla\statistics\descriptive
+ * @covers \local_tla\forecast\forecaster
  */
-#[CoversClass(descriptive::class)]
-#[CoversClass(forecaster::class)]
 final class descriptive_test extends \advanced_testcase {
     public function test_basic_stats(): void {
         $x = [2, 4, 4, 4, 5, 5, 7, 9];

@@ -25,14 +25,12 @@
 namespace local_tla;
 
 use local_tla\repository\course_grade_repository;
-use PHPUnit\Framework\Attributes\CoversClass;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Tests for course_grade_repository_test.
+ * @covers \local_tla\repository\course_grade_repository
  */
-#[CoversClass(course_grade_repository::class)]
 final class course_grade_repository_test extends \advanced_testcase {
     /**
      * Fetch the main mod grade item id for an activity instance.

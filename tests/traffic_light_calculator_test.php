@@ -25,14 +25,12 @@
 namespace local_tla;
 
 use local_tla\indicator\traffic_light_calculator;
-use PHPUnit\Framework\Attributes\CoversClass;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Tests for traffic_light_calculator_test.
+ * @covers \local_tla\indicator\traffic_light_calculator
  */
-#[CoversClass(traffic_light_calculator::class)]
 final class traffic_light_calculator_test extends \advanced_testcase {
     public function test_green_below_yellow_threshold(): void {
         $result = (new traffic_light_calculator())->calculate(1, 10, 0.25, 0.50, 8);

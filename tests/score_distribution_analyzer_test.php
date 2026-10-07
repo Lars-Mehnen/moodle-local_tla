@@ -25,14 +25,12 @@
 namespace local_tla;
 
 use local_tla\indicator\score_distribution_analyzer;
-use PHPUnit\Framework\Attributes\CoversClass;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Tests for score_distribution_analyzer_test.
+ * @covers \local_tla\indicator\score_distribution_analyzer
  */
-#[CoversClass(score_distribution_analyzer::class)]
 final class score_distribution_analyzer_test extends \advanced_testcase {
     /** @var score_distribution_analyzer Analyzer under test. */
     private score_distribution_analyzer $analyzer;

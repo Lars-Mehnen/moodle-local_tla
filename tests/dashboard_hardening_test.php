@@ -26,14 +26,12 @@ namespace local_tla;
 
 use local_tla\service\course_dashboard_service;
 use local_tla\repository\course_grade_repository;
-use PHPUnit\Framework\Attributes\CoversClass;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Tests for dashboard_hardening_test.
+ * @covers \local_tla\service\course_dashboard_service
  */
-#[CoversClass(course_dashboard_service::class)]
 final class dashboard_hardening_test extends \advanced_testcase {
     /**
      * A completely empty course produces clean, empty aggregates and no error.

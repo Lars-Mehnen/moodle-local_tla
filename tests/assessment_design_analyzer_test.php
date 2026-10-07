@@ -26,16 +26,15 @@ namespace local_tla;
 
 use local_tla\indicator\assessment_design_analyzer;
 use local_tla\tests\assessment_design_cases;
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 
 defined('MOODLE_INTERNAL') || die();
+
 require_once(__DIR__ . '/fixtures/assessment_design_cases.php');
 
 /**
  * Tests for assessment_design_analyzer_test.
+ * @covers \local_tla\indicator\assessment_design_analyzer
  */
-#[CoversClass(assessment_design_analyzer::class)]
 final class assessment_design_analyzer_test extends \advanced_testcase {
     /**
      * Data provider of named assessment-design rule cases.
@@ -46,7 +45,14 @@ final class assessment_design_analyzer_test extends \advanced_testcase {
         return assessment_design_cases::cases();
     }
 
-    #[DataProvider('rule_cases')]
+    /**
+     * Each rule case yields its expected finding code and status.
+     *
+     * @param array $input Activity configuration row.
+     * @param string $code Expected finding code.
+     * @param string $status Expected finding status.
+     * @dataProvider rule_cases
+     */
     public function test_rule(array $input, string $code, string $status): void {
         $before = $input;
         $result = (new assessment_design_analyzer())->analyze($input);

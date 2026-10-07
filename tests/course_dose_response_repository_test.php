@@ -25,14 +25,12 @@
 namespace local_tla;
 
 use local_tla\repository\course_dose_response_repository;
-use PHPUnit\Framework\Attributes\CoversClass;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Tests for course_dose_response_repository_test.
+ * @covers \local_tla\repository\course_dose_response_repository
  */
-#[CoversClass(course_dose_response_repository::class)]
 final class course_dose_response_repository_test extends \advanced_testcase {
     /** @var int Counter for unique quiz_attempts.uniqueid values. */
     private int $uniqueid = 1;

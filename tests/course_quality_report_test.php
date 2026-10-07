@@ -25,14 +25,11 @@
 namespace local_tla;
 
 use local_tla\service\course_quality_report;
-use PHPUnit\Framework\Attributes\CoversClass;
-
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Tests for course_quality_report_test.
+ * @covers \local_tla\service\course_quality_report
  */
-#[CoversClass(course_quality_report::class)]
 final class course_quality_report_test extends \advanced_testcase {
     /**
      * Insert a final grade for a user on an assignment's grade item.

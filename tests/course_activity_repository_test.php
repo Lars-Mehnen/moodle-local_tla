@@ -25,14 +25,12 @@
 namespace local_tla;
 
 use local_tla\repository\course_activity_repository;
-use PHPUnit\Framework\Attributes\CoversClass;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Tests for course_activity_repository_test.
+ * @covers \local_tla\repository\course_activity_repository
  */
-#[CoversClass(course_activity_repository::class)]
 final class course_activity_repository_test extends \advanced_testcase {
     public function test_invalid_parameters(): void {
         $repository = new course_activity_repository();

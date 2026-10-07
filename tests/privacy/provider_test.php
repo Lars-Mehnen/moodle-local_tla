@@ -24,14 +24,12 @@
 
 namespace local_tla\privacy;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Tests for provider_test.
+ * @covers \provider
  */
-#[CoversClass(provider::class)]
 final class provider_test extends \advanced_testcase {
     public function test_is_a_null_provider(): void {
         $this->assertInstanceOf(

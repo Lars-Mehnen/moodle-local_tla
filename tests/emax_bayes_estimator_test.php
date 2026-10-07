@@ -25,14 +25,12 @@
 namespace local_tla;
 
 use local_tla\prediction\emax_bayes_estimator;
-use PHPUnit\Framework\Attributes\CoversClass;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Tests for emax_bayes_estimator_test.
+ * @covers \local_tla\prediction\emax_bayes_estimator
  */
-#[CoversClass(emax_bayes_estimator::class)]
 final class emax_bayes_estimator_test extends \advanced_testcase {
     /** @var emax_bayes_estimator Estimator under test. */
     private emax_bayes_estimator $estimator;

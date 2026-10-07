@@ -30,16 +30,16 @@ use local_tla\indicator\assessment_design_analyzer;
 use local_tla\output\assessment_design_presenter;
 use local_tla\service\course_dashboard_service;
 use local_tla\tests\assessment_design_cases;
-use PHPUnit\Framework\Attributes\CoversClass;
 
 defined('MOODLE_INTERNAL') || die();
+
 require_once(__DIR__ . '/fixtures/assessment_design_cases.php');
 
 /**
  * Tests for assessment_design_integration_test.
+ * @covers \local_tla\external\get_course_quality_report
+ * @covers \local_tla\output\assessment_design_presenter
  */
-#[CoversClass(get_course_quality_report::class)]
-#[CoversClass(assessment_design_presenter::class)]
 final class assessment_design_integration_test extends \advanced_testcase {
     public function test_api_and_dashboard_share_design_findings_and_return_schema(): void {
         $this->resetAfterTest();

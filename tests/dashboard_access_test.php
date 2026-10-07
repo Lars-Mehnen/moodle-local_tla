@@ -25,14 +25,12 @@
 namespace local_tla;
 
 use local_tla\local\dashboard_access;
-use PHPUnit\Framework\Attributes\CoversClass;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Tests for dashboard_access_test.
+ * @covers \local_tla\local\dashboard_access
  */
-#[CoversClass(dashboard_access::class)]
 final class dashboard_access_test extends \advanced_testcase {
     public function test_editingteacher_with_capability_is_allowed(): void {
         $this->resetAfterTest();

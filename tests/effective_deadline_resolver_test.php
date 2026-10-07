@@ -25,14 +25,12 @@
 namespace local_tla;
 
 use local_tla\assignment\effective_deadline_resolver;
-use PHPUnit\Framework\Attributes\CoversClass;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Tests for effective_deadline_resolver_test.
+ * @covers \local_tla\assignment\effective_deadline_resolver
  */
-#[CoversClass(effective_deadline_resolver::class)]
 final class effective_deadline_resolver_test extends \advanced_testcase {
     /** @var effective_deadline_resolver Resolver under test. */
     private effective_deadline_resolver $resolver;

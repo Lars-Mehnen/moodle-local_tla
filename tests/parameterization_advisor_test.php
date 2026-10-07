@@ -25,14 +25,12 @@
 namespace local_tla;
 
 use local_tla\indicator\parameterization_advisor;
-use PHPUnit\Framework\Attributes\CoversClass;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Tests for parameterization_advisor_test.
+ * @covers \local_tla\indicator\parameterization_advisor
  */
-#[CoversClass(parameterization_advisor::class)]
 final class parameterization_advisor_test extends \advanced_testcase {
     /** @var parameterization_advisor Advisor under test. */
     private parameterization_advisor $advisor;

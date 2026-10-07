@@ -28,15 +28,13 @@ use local_tla\repository\assessment_design_repository;
 use local_tla\service\assessment_design_service;
 use local_tla\service\course_dashboard_service;
 use local_tla\service\course_quality_report;
-use PHPUnit\Framework\Attributes\CoversClass;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Tests for assessment_design_repository_test.
+ * @covers \local_tla\repository\assessment_design_repository
+ * @covers \local_tla\service\assessment_design_service
  */
-#[CoversClass(assessment_design_repository::class)]
-#[CoversClass(assessment_design_service::class)]
 final class assessment_design_repository_test extends \advanced_testcase {
     public function test_empty_course_has_configuration_snapshot_without_observations(): void {
         $this->resetAfterTest();

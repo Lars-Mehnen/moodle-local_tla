@@ -25,14 +25,12 @@
 namespace local_tla;
 
 use local_tla\repository\quiz_progress_repository;
-use PHPUnit\Framework\Attributes\CoversClass;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Tests for quiz_progress_repository_test.
+ * @covers \local_tla\repository\quiz_progress_repository
  */
-#[CoversClass(quiz_progress_repository::class)]
 final class quiz_progress_repository_test extends \advanced_testcase {
     /** @var int Counter for unique quiz_attempts.uniqueid values. */
     private int $uniqueid = 1;

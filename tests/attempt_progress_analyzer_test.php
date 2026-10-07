@@ -25,14 +25,11 @@
 namespace local_tla;
 
 use local_tla\indicator\attempt_progress_analyzer;
-use PHPUnit\Framework\Attributes\CoversClass;
-
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Tests for attempt_progress_analyzer_test.
+ * @covers \local_tla\indicator\attempt_progress_analyzer
  */
-#[CoversClass(attempt_progress_analyzer::class)]
 final class attempt_progress_analyzer_test extends \advanced_testcase {
     /** @var attempt_progress_analyzer Analyzer under test. */
     private attempt_progress_analyzer $analyzer;

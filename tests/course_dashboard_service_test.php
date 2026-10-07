@@ -25,14 +25,12 @@
 namespace local_tla;
 
 use local_tla\service\course_dashboard_service;
-use PHPUnit\Framework\Attributes\CoversClass;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Tests for course_dashboard_service_test.
+ * @covers \local_tla\service\course_dashboard_service
  */
-#[CoversClass(course_dashboard_service::class)]
 final class course_dashboard_service_test extends \advanced_testcase {
     public function test_empty_dashboard_data(): void {
         $this->resetAfterTest(true);

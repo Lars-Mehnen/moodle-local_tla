@@ -1,3 +1,17 @@
+# 0.3.0-dev (2026112600)
+
+- Add the dashboard section "Origin of a two-group result (U-shape)": checks
+  whether the later upper and lower group are separated from the start, separate
+  from a certain activity on, or whether submission rate/activity drop after the
+  course is arithmetically passed or can no longer be passed.
+- New pure analyser `ushape_origin_analyzer` (rank-based leave-one-out separation,
+  change-point search, recovery rates, difference-in-differences against open
+  participants) and repository `course_ushape_origin_repository` (three bundled
+  read-only queries: grade timeline, course total pass threshold, daily activity).
+- New site setting `local_tla/ushape_pass_share` (fallback pass share).
+- EN/DE strings, help text, lecturer guide, PHPUnit and standalone tests.
+- No schema change.
+
 # 0.2.0-rc1 (2026090500)
 
 - Add read-only assessment-design repository, pure analyser and shared service.

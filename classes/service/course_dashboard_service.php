@@ -28,6 +28,7 @@ use local_tla\repository\course_activity_repository;
 use local_tla\repository\course_grade_repository;
 use local_tla\repository\course_dose_response_repository;
 use local_tla\repository\quiz_progress_repository;
+use local_tla\repository\course_ushape_origin_repository;
 use local_tla\indicator\score_distribution_interpreter;
 
 
@@ -53,6 +54,9 @@ final class course_dashboard_service {
     /** @var assessment_design_service Current assessment settings. */
     private assessment_design_service $designservice;
 
+    /** @var course_ushape_origin_repository Two-group (U-shape) origin analysis. */
+    private course_ushape_origin_repository $ushapeoriginrepository;
+
     /**
      * Constructor.
      *
@@ -61,13 +65,15 @@ final class course_dashboard_service {
      * @param quiz_progress_repository|null $quizprogressrepository Quiz progress repository.
      * @param course_dose_response_repository|null $doseresponserepository Dose-response repository.
      * @param assessment_design_service|null $designservice Settings analysis.
+     * @param course_ushape_origin_repository|null $ushapeoriginrepository U-shape origin analysis.
      */
     public function __construct(
         ?course_activity_repository $repository = null,
         ?course_grade_repository $graderepository = null,
         ?quiz_progress_repository $quizprogressrepository = null,
         ?course_dose_response_repository $doseresponserepository = null,
-        ?assessment_design_service $designservice = null
+        ?assessment_design_service $designservice = null,
+        ?course_ushape_origin_repository $ushapeoriginrepository = null
     ) {
         $this->repository = $repository ?? new course_activity_repository();
         $this->graderepository = $graderepository ?? new course_grade_repository();
@@ -75,6 +81,7 @@ final class course_dashboard_service {
         $this->doseresponserepository = $doseresponserepository
             ?? new course_dose_response_repository();
         $this->designservice = $designservice ?? new assessment_design_service();
+        $this->ushapeoriginrepository = $ushapeoriginrepository ?? new course_ushape_origin_repository();
     }
 
     /**
@@ -89,7 +96,7 @@ final class course_dashboard_service {
      * @return array Baseline dashboard data keyed by section (courseid, timestart,
      *     timeend, eventsperday, activeusersperday, moduleevents,
      *     assignmentsubmissions, scoredistributions, quizprogress, courseprogress,
-     *     assessmentdesign, doseresponse).
+     *     assessmentdesign, doseresponse, ushapeorigin).
      * @throws \invalid_parameter_exception If a parameter is invalid.
      */
     public function get_course_dashboard_data(
@@ -140,6 +147,11 @@ final class course_dashboard_service {
                 ),
             'doseresponse' =>
                 $this->doseresponserepository->get_learning_dose_response(
+                    $courseid,
+                    $minobservations
+                ),
+            'ushapeorigin' =>
+                $this->ushapeoriginrepository->get_ushape_origin(
                     $courseid,
                     $minobservations
                 ),

@@ -285,6 +285,86 @@
 
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
+            <h3 class="h5 mb-0">{{#str}} ushapeorigin, local_tla {{/str}} {{{ushapeorigin.help}}}</h3>
+            <span class="badge {{ushapeorigin.severityclass}}">{{ushapeorigin.statuslabel}}</span>
+        </div>
+        <div class="card-body">
+            <p class="small text-muted mb-3">{{#str}} ushapeoriginintro, local_tla {{/str}}</p>
+            {{^ushapeorigin.analysed}}
+                <p class="mb-0 text-muted">{{ushapeorigin.emptymessage}}</p>
+            {{/ushapeorigin.analysed}}
+            {{#ushapeorigin.analysed}}
+                <div class="row text-center small mb-3">
+                    <div class="col"><div class="text-muted">{{#str}} progressparticipants, local_tla {{/str}}</div><strong>{{ushapeorigin.participants}}</strong></div>
+                    <div class="col"><div class="text-muted">{{#str}} ushapeorigindueitems, local_tla {{/str}}</div><strong>{{ushapeorigin.dueitems}}</strong></div>
+                    <div class="col"><div class="text-muted">{{#str}} ushapeoriginupper, local_tla {{/str}}</div><strong>{{ushapeorigin.upper}}</strong></div>
+                    <div class="col"><div class="text-muted">{{#str}} ushapeoriginlower, local_tla {{/str}}</div><strong>{{ushapeorigin.lower}}</strong></div>
+                    <div class="col"><div class="text-muted">{{#str}} ushapeoriginseparation, local_tla {{/str}}</div><strong>{{ushapeorigin.separation}}</strong></div>
+                    <div class="col"><div class="text-muted">{{#str}} ushapeoriginpass, local_tla {{/str}}</div><strong>{{ushapeorigin.pass}}</strong></div>
+                </div>
+                {{#ushapeorigin.nogroups}}<p class="small text-muted">{{#str}} ushapeoriginempty_nogroups, local_tla {{/str}}</p>{{/ushapeorigin.nogroups}}
+                {{#ushapeorigin.patterns}}
+                    <div class="border rounded p-3 mb-2">
+                        <div class="d-flex justify-content-between align-items-start mb-1">
+                            <strong>{{label}}</strong>
+                            <span class="badge {{statusclass}}">{{statuslabel}}</span>
+                        </div>
+                        {{#details}}<p class="small text-muted mb-1">{{text}}</p>{{/details}}
+                        {{#advice}}<p class="small mb-0">{{advice}}</p>{{/advice}}
+                    </div>
+                {{/ushapeorigin.patterns}}
+                {{#ushapeorigin.chart}}<div class="local-tla-chart my-3">{{{ushapeorigin.chart}}}</div>{{/ushapeorigin.chart}}
+                {{#ushapeorigin.hasrows}}
+                <details class="mb-3">
+                    <summary class="small text-muted">{{#str}} ushapeorigindata, local_tla {{/str}}</summary>
+                    <div class="table-responsive">
+                        <table class="table table-sm small mb-0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>{{#str}} activity, moodle {{/str}}</th>
+                                    <th>{{#str}} ushapeorigincolsection, local_tla {{/str}}</th>
+                                    <th>{{#str}} ushapeorigincoldate, local_tla {{/str}}</th>
+                                    <th class="text-end">{{#str}} ushapeorigincolsubmitted, local_tla {{/str}}</th>
+                                    <th class="text-end">{{#str}} ushapeorigincolupper, local_tla {{/str}}</th>
+                                    <th class="text-end">{{#str}} ushapeorigincollower, local_tla {{/str}}</th>
+                                    <th class="text-end">{{#str}} ushapeorigincoluppersub, local_tla {{/str}}</th>
+                                    <th class="text-end">{{#str}} ushapeorigincollowersub, local_tla {{/str}}</th>
+                                    <th class="text-end">{{#str}} ushapeorigincolauc, local_tla {{/str}}</th>
+                                    <th class="text-end">{{#str}} ushapeorigincolpassed, local_tla {{/str}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#ushapeorigin.rows}}
+                                <tr{{#divergence}} class="table-warning"{{/divergence}}>
+                                    <td>{{index}}</td>
+                                    <td>{{name}}{{#divergence}} <span class="badge bg-warning text-dark">{{#str}} ushapeorigindivergencemark, local_tla {{/str}}</span>{{/divergence}}</td>
+                                    <td>{{section}}</td>
+                                    <td>{{date}}</td>
+                                    <td class="text-end">{{submitted}}</td>
+                                    <td class="text-end">{{uppermedian}}</td>
+                                    <td class="text-end">{{lowermedian}}</td>
+                                    <td class="text-end">{{uppersubmission}}%</td>
+                                    <td class="text-end">{{lowersubmission}}%</td>
+                                    <td class="text-end">{{auc}}</td>
+                                    <td class="text-end">{{passed}}%</td>
+                                </tr>
+                                {{/ushapeorigin.rows}}
+                            </tbody>
+                        </table>
+                    </div>
+                </details>
+                {{/ushapeorigin.hasrows}}
+                {{#ushapeorigin.pending}}<p class="small text-muted mb-1">{{ushapeorigin.pending}}</p>{{/ushapeorigin.pending}}
+                {{#ushapeorigin.ungraded}}<p class="small text-muted mb-1">{{ushapeorigin.ungraded}}</p>{{/ushapeorigin.ungraded}}
+                {{#ushapeorigin.nodeadline}}<p class="small text-muted mb-1">{{ushapeorigin.nodeadline}}</p>{{/ushapeorigin.nodeadline}}
+                <p class="small text-warning mb-0">{{#str}} ushapeoriginwarning, local_tla {{/str}}</p>
+            {{/ushapeorigin.analysed}}
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
             <h3 class="h5 mb-0">{{#str}} doseresponse, local_tla {{/str}} {{{doseresponse.help}}}</h3>
             <span class="badge {{doseresponse.severityclass}}">{{doseresponse.statuslabel}}</span>
         </div>

@@ -52,6 +52,11 @@ final class course_dashboard_service_test extends \advanced_testcase {
         $this->assertIsInt($result['assessmentdesign']['checkedat']);
         unset($result['assessmentdesign']);
 
+        $this->assertSame('unknown', $result['ushapeorigin']['status']);
+        $this->assertSame('toofewitems', $result['ushapeorigin']['reason']);
+        $this->assertSame('setting', $result['ushapeorigin']['passsource']);
+        unset($result['ushapeorigin']);
+
         $this->assertSame([
             'courseid' => (int) $course->id,
             'timestart' => $daystart,

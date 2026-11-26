@@ -459,6 +459,159 @@ $doseresponse = [
     'help' => $OUTPUT->help_icon('doseresponse', 'local_tla'),
 ];
 
+// Origin of a two-group (U-shaped) course result.
+$uo = $data['ushapeorigin'];
+$uoanalysed = $uo['status'] === 'analysed';
+$fmtauc = static fn(?float $value): ?string => $value === null ? '–' : format_float($value, 2);
+$fmtpctdash = static fn(?float $share): string => $share === null ? '–' : format_float($share * 100, 0);
+$patternclasses = [
+    'observed' => 'bg-warning text-dark',
+    'notobserved' => 'bg-success',
+    'notapplicable' => 'bg-secondary',
+    'descriptive' => 'bg-info text-dark',
+    'unknown' => 'bg-secondary',
+];
+$uopatterns = [];
+foreach (['fromstart', 'divergence', 'motivation', 'givingup'] as $pattern) {
+    $p = $uo[$pattern]; // Pattern result.
+    $status = $p['status'];
+    $details = [];
+    if ($status === 'unknown') {
+        $details[] = get_string('ushapeorigindetail_unknown', 'local_tla');
+    } else if ($pattern === 'fromstart') {
+        $details[] = get_string('ushapeorigindetail_fromstart', 'local_tla', (object) [
+            'items' => $p['earlyitems'],
+            'early' => $fmtauc($p['earlyauc']),
+            'late' => $fmtauc($p['lateauc']),
+        ]);
+    } else if ($pattern === 'divergence' && $p['beforeauc'] === null) {
+        $details[] = get_string('ushapeorigindetail_unknown', 'local_tla');
+    } else if ($pattern === 'divergence') {
+        $details[] = $status === 'observed'
+            ? get_string('ushapeorigindetail_divergence_observed', 'local_tla', (object) [
+                'name' => format_string($p['name']),
+                'section' => format_string($p['section'] === '' ? '–' : $p['section']),
+                'date' => userdate($p['ordertime'], get_string('strftimedatefullshort', 'langconfig')),
+                'before' => $fmtauc($p['beforeauc']),
+                'after' => $fmtauc($p['afterauc']),
+            ])
+            : get_string('ushapeorigindetail_divergence', 'local_tla', (object) [
+                'jump' => $fmtauc($p['jump']),
+                'before' => $fmtauc($p['beforeauc']),
+                'after' => $fmtauc($p['afterauc']),
+            ]);
+        if ($p['recoveryearly'] !== null || $p['recoverylate'] !== null) {
+            $details[] = get_string('ushapeorigindetail_recovery', 'local_tla', (object) [
+                'early' => $fmtpctdash($p['recoveryearly']),
+                'late' => $fmtpctdash($p['recoverylate']),
+            ]);
+        }
+    } else {
+        $details[] = get_string('ushapeorigindetail_event', 'local_tla', (object) [
+            'students' => $p['students'],
+            'before' => $fmtpctdash($p['submissionbefore']),
+            'after' => $fmtpctdash($p['submissionafter']),
+            'cbefore' => $fmtpctdash($p['controlsubmissionbefore']),
+            'cafter' => $fmtpctdash($p['controlsubmissionafter']),
+            'did' => format_float($p['submissiondid'] * 100, 0),
+        ]);
+        if ($p['activitydid'] !== null) {
+            $details[] = get_string('ushapeorigindetail_activity', 'local_tla', (object) [
+                'own' => format_float($p['activitychange'], 0),
+                'control' => format_float($p['controlactivitychange'], 0),
+                'did' => format_float($p['activitydid'], 0),
+            ]);
+        } else if (!$uo['hasactivity']) {
+            $details[] = get_string('ushapeoriginnoactivity', 'local_tla');
+        }
+        if ($p['scoredid'] !== null) {
+            $details[] = get_string('ushapeorigindetail_score', 'local_tla', format_float($p['scoredid'], 1));
+        }
+    }
+    $uopatterns[] = [
+        'label' => get_string('ushapeoriginpattern_' . $pattern, 'local_tla'),
+        'statuslabel' => get_string('ushapeoriginstatus_' . $status, 'local_tla'),
+        'statusclass' => $patternclasses[$status] ?? 'bg-secondary',
+        'details' => array_map(static fn(string $text): array => ['text' => $text], $details),
+        'advice' => $status === 'observed' ? get_string('ushapeoriginadvice_' . $pattern, 'local_tla') : '',
+    ];
+}
+
+$uorows = array_map(static function (array $row, int $index) use ($fmtval, $fmtauc, $fmtpctdash): array {
+    return [
+        'index' => $index + 1,
+        'name' => format_string($row['name']),
+        'section' => format_string($row['section']),
+        'date' => userdate($row['ordertime'], get_string('strftimedatefullshort', 'langconfig')),
+        'submitted' => $row['submitted'],
+        'uppermedian' => $fmtval($row['uppermedian']) ?? '–',
+        'lowermedian' => $fmtval($row['lowermedian']) ?? '–',
+        'uppersubmission' => $fmtpctdash($row['uppersubmission']),
+        'lowersubmission' => $fmtpctdash($row['lowersubmission']),
+        'auc' => $fmtauc($row['auc']),
+        'passed' => $fmtpctdash($row['passedshare']),
+        'divergence' => $row['divergence'],
+    ];
+}, $uo['items'], array_keys($uo['items']));
+
+$uochart = '';
+if ($uoanalysed && count($uo['items']) >= 2) {
+    $labels = [];
+    foreach ($uo['items'] as $index => $row) {
+        $labels[] = ($index + 1) . ': ' . shorten_text(format_string($row['name']), 25);
+    }
+    $round = static fn(?float $v, float $factor = 1.0): ?float => $v === null ? null : round($v * $factor, 1);
+    $series = [
+        ['ushapeoriginchartupper', '#1c7ed6', array_map(static fn($r) => $round($r['uppermedian']), $uo['items'])],
+        ['ushapeoriginchartlower', '#e8590c', array_map(static fn($r) => $round($r['lowermedian']), $uo['items'])],
+        ['ushapeoriginchartauc', '#6741d9', array_map(static fn($r) => $round($r['auc'], 100), $uo['items'])],
+        ['ushapeoriginchartpassed', '#2f9e44', array_map(static fn($r) => $round($r['passedshare'], 100), $uo['items'])],
+        ['ushapeoriginchartfailed', '#868e96', array_map(static fn($r) => $round($r['failedshare'], 100), $uo['items'])],
+    ];
+    $uochartobj = new core\chart_line();
+    $uochartobj->set_labels($labels);
+    foreach ($series as [$key, $color, $values]) {
+        $uoseries = new core\chart_series(get_string($key, 'local_tla'), $values);
+        $uoseries->set_color($color);
+        $uochartobj->add_series($uoseries);
+    }
+    $uochartobj->get_xaxis(0, true)->set_label(get_string('ushapeoriginaxisx', 'local_tla'));
+    $uoyaxis = $uochartobj->get_yaxis(0, true);
+    $uoyaxis->set_label(get_string('ushapeoriginaxisy', 'local_tla'));
+    $uoyaxis->set_min(0);
+    $uoyaxis->set_max(100);
+    $uochart = $OUTPUT->render($uochartobj);
+}
+
+$uosplit = !$uoanalysed ? 'unknown' : ($uo['twogroups'] || $uo['finalushape'] ? 'yes' : 'no');
+$ushapeorigin = [
+    'analysed' => $uoanalysed,
+    'emptymessage' => $uo['reason'] === null || $uoanalysed ? ''
+        : get_string('ushapeoriginempty_' . $uo['reason'], 'local_tla'),
+    'nogroups' => $uoanalysed && $uo['reason'] === 'nogroups',
+    'statuslabel' => get_string('ushapeoriginsplit_' . $uosplit, 'local_tla'),
+    'severityclass' => $severityclasses[$uo['severity']] ?? 'bg-secondary',
+    'participants' => $uo['participants'],
+    'dueitems' => $uo['dueitems'],
+    'separation' => $fmtauc($uo['separation']),
+    'upper' => get_string('ushapeorigingroup', 'local_tla', (object) [
+        'count' => $uo['uppercount'], 'median' => $fmtval($uo['uppermedian']) ?? '–',
+    ]),
+    'lower' => get_string('ushapeorigingroup', 'local_tla', (object) [
+        'count' => $uo['lowercount'], 'median' => $fmtval($uo['lowermedian']) ?? '–',
+    ]),
+    'pass' => get_string('ushapeoriginpass_' . $uo['passsource'], 'local_tla', format_float($uo['passshare'] * 100, 0)),
+    'pending' => $uo['pendingitems'] > 0 ? get_string('ushapeoriginpending', 'local_tla', $uo['pendingitems']) : '',
+    'ungraded' => $uo['ungradeditems'] > 0 ? get_string('ushapeoriginungraded', 'local_tla', $uo['ungradeditems']) : '',
+    'nodeadline' => $uo['nodeadlineitems'] > 0
+        ? get_string('ushapeoriginnodeadline', 'local_tla', $uo['nodeadlineitems']) : '',
+    'patterns' => $uopatterns,
+    'chart' => $uochart,
+    'rows' => $uorows,
+    'hasrows' => !empty($uorows),
+    'help' => $OUTPUT->help_icon('ushapeorigin', 'local_tla'),
+];
+
 $assessmentdesign = (new assessment_design_presenter())->export($data['assessmentdesign'], $url, $designpage);
 
 $templatedata = [
@@ -508,6 +661,7 @@ $templatedata = [
     'hascourseprogress' => $courseprogress['analyzed'],
     'doseresponse' => $doseresponse,
     'hasdoseresponse' => $doseresponse['analyzed'],
+    'ushapeorigin' => $ushapeorigin,
 ];
 
 echo $OUTPUT->header();

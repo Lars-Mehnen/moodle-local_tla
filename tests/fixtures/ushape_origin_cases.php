@@ -26,8 +26,6 @@
 
 namespace local_tla\tests;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Case builder.
  */

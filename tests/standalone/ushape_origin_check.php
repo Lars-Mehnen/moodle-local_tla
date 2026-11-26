@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignoreFile
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -33,6 +34,7 @@ if (PHP_SAPI !== 'cli') {
 }
 define('MOODLE_INTERNAL', true);
 
+// Only needed to check the same exception type without bootstrapping Moodle.
 if (!class_exists('invalid_parameter_exception')) {
     class invalid_parameter_exception extends InvalidArgumentException {
     }

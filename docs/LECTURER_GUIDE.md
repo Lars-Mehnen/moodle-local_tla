@@ -58,6 +58,49 @@ missing-work treatment. These are possible explanations, not causal diagnoses.
 A middle-centred distribution is not a universal quality target for all types
 of assessment, particularly practice-to-completion activities.
 
+## Origin of a two-group result (U-shape)
+
+A U-shaped result usually develops over the course. The section splits the
+course result (points of all graded quizzes and assignments whose deadline has
+passed and which already have grades) into a later upper and lower group and
+asks when the two groups separate. Four patterns are checked; they can occur
+together:
+
+1. **Separated from the start** - the groups already differ in the first
+   activities (first quarter, at most three). Typical reasons: prior knowledge,
+   interest, entry requirements.
+2. **Separation from a certain activity** - the groups are close at first and
+   separate from one activity on. The activity, its section and deadline are
+   named. Check whether this topic builds on earlier material that was not
+   secured. The recovery rate (below-median students reaching the median in the
+   next activity) shows whether falling behind becomes permanent.
+3. **Change after the course is passed** - once a student has reached the pass
+   threshold arithmetically, their submission rate and course activity before
+   and after that moment are compared with the same change for students whose
+   outcome is still open at that moment.
+4. **Change when passing is no longer possible** - the same comparison from the
+   moment passing became arithmetically impossible. Shown as figures only: in a
+   placebo check on 1490 real courses (activity order randomly permuted) this
+   rule fired as often as with the real order, because the fail moment is itself
+   caused by missing submissions.
+
+Calibration: thresholds were set so that the placebo (permuted order) rate is
+clearly below the real rate - separation jump >= 0.30 (12 % of assessable
+courses vs 6 % placebo), submission rate -15 points (6 % vs 2 %), activity
+-50 % (6 % vs 3 %). Expect a few false hits; read the per-activity table.
+
+Method notes: separation per activity is a rank statistic (AUC; 0.5 = none,
+1 = complete), computed with groups formed without the activity itself
+(leave-one-out), so differing difficulty or a single activity cannot create a
+pattern by itself. Patterns 1 and 2 are only reported when the course result
+shows a pronounced two-group split (explained variance of the split >= 0.80 and
+group medians >= 25 points apart, or the existing U-shape rule). The pass
+threshold is the course total's "Grade to pass"; otherwise the site setting
+`ushape_pass_share` (default 0.5) is used and marked as assumed. It is computed
+from raw activity points and can differ from the real grading scheme (weights,
+exams outside Moodle). Activities without a deadline are ordered by creation
+time and listed. All results are aggregates; patterns are not causes.
+
 ## Other existing analyses
 
 Activity counts describe recorded events, not attention or understanding.

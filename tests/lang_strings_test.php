@@ -24,7 +24,6 @@
 
 namespace local_tla;
 
-
 /**
  * Tests for lang_strings_test.
  *
@@ -78,6 +77,17 @@ final class lang_strings_test extends \advanced_testcase {
             'doseresponsefit_poor', 'doseresponsefit_unknown',
             'doseresponsefitexpl_good', 'doseresponsefitexpl_weak', 'doseresponsefitexpl_flat',
             'doseresponsefitexpl_poor', 'doseresponsefitexpl_unknown',
+            // U-shape origin.
+            'ushapeorigin', 'ushapeorigin_help', 'ushapeoriginintro', 'ushapeoriginwarning',
+            'ushapeoriginsplit_yes', 'ushapeoriginsplit_no', 'ushapeoriginsplit_unknown',
+            'ushapeoriginstatus_observed', 'ushapeoriginstatus_notobserved', 'ushapeoriginstatus_unknown',
+            'ushapeoriginpattern_fromstart', 'ushapeoriginpattern_divergence',
+            'ushapeoriginpattern_motivation', 'ushapeoriginpattern_givingup',
+            'ushapeoriginadvice_fromstart', 'ushapeoriginadvice_divergence',
+            'ushapeoriginadvice_motivation', 'ushapeoriginadvice_givingup',
+            'ushapeoriginempty_toofewitems', 'ushapeoriginempty_toofewparticipants',
+            'ushapeoriginempty_nogroups', 'ushapeoriginpass_gradebook', 'ushapeoriginpass_setting',
+            'ushape_pass_share', 'ushape_pass_share_desc',
             // Empty states.
             'emptynomatchingactivities', 'emptynovalidgrades',
             'emptynotenoughobservations', 'emptynoquizattempts',

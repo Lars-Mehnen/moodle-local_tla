@@ -49,4 +49,12 @@ if ($hassiteconfig) {
         '8',
         PARAM_INT
     ));
+    // Fallback pass share for the U-shape origin analysis (course total without grade to pass).
+    $settings->add(new admin_setting_configtext(
+        'local_tla/ushape_pass_share',
+        get_string('ushape_pass_share', 'local_tla'),
+        get_string('ushape_pass_share_desc', 'local_tla'),
+        '0.5',
+        PARAM_FLOAT
+    ));
 }

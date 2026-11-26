@@ -24,7 +24,6 @@
 
 namespace local_tla\output;
 
-
 /**
  * Aggregate, configuration-only template data with bounded, accessible paging.
  */

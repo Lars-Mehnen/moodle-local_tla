@@ -26,7 +26,6 @@ namespace local_tla\repository;
 
 use local_tla\assignment\effective_deadline_resolver;
 
-
 /**
  * Read-only repository for course activity data.
  */

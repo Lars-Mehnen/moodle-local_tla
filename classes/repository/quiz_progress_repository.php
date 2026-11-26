@@ -26,7 +26,6 @@ namespace local_tla\repository;
 
 use local_tla\indicator\attempt_progress_analyzer;
 
-
 /**
  * Aggregate per-quiz progress between completed attempts.
  *

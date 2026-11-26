@@ -24,7 +24,6 @@
 
 namespace local_tla\indicator;
 
-
 /**
  * Shared by dashboard and external report. No misconduct detection, no generated
  * question variants, and no causal inference from current rules to past grades.

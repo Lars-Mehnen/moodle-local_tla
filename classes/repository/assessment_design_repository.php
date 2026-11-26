@@ -24,7 +24,6 @@
 
 namespace local_tla\repository;
 
-
 /**
  * A read-only snapshot of live quiz and assignment configuration.
  *

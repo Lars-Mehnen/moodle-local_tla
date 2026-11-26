@@ -266,4 +266,75 @@ $string['trafficlight_yellow'] = 'Gelb';
 $string['trafficlightminimum'] = 'Mindestens {$a} eingereichte Abgaben sind für eine Bewertung erforderlich.';
 $string['unresolveddeadlines'] = 'Nicht eindeutig bestimmbare Fristen';
 $string['useroverrides'] = 'Benutzer-Overrides';
+$string['ushape_pass_share'] = 'U-Verteilungsanalyse: Ersatz-Bestehensgrenze';
+$string['ushape_pass_share_desc'] = 'Anteil aller Punkte (0–1), der als Bestehensgrenze verwendet wird, wenn in der Kurssumme keine „Bestehensgrenze“ gesetzt ist. Standard 0,5.';
+$string['ushapeorigin'] = 'Entstehung einer Zweiteilung (U-Verteilung)';
+$string['ushapeorigin_help'] = 'Das Kursergebnis (Punkte aller bewerteten Tests und Aufgaben mit abgelaufener Frist) wird in eine spätere obere und untere Gruppe geteilt. Für jede Aktivität wird in der Reihenfolge der Fristen gemessen, wie stark sich beide Gruppen unterscheiden, und zwar über Ränge (AUC: 0,5 = kein Unterschied, 1 = alle der oberen Gruppe sind besser als alle der unteren). Weil pro Aktivität mit Rängen gerechnet wird, erzeugt eine unterschiedliche Schwierigkeit allein keine Trennung.
+
+Geprüft werden vier Muster:
+* Von Beginn an getrennt: Die Gruppen unterscheiden sich schon in den ersten Aktivitäten deutlich (Vorwissen, Interesse).
+* Trennung ab einer bestimmten Aktivität: Die Gruppen liegen zunächst nahe beieinander und trennen sich ab einer Aktivität (dort gehen Studierende verloren, eventuell wegen Abhängigkeit von früherem Stoff).
+* Veränderung nach dem Bestehen: Sobald jemand die Bestehensgrenze rechnerisch erreicht hat, werden Abgabequote und Kursaktivität vor und nach diesem Zeitpunkt verglichen, und zwar mit der Veränderung jener Studierenden, deren Ergebnis zum selben Zeitpunkt noch offen ist.
+* Veränderung, wenn Bestehen nicht mehr möglich ist: derselbe Vergleich ab dem Zeitpunkt, ab dem das Bestehen rechnerisch nicht mehr erreichbar ist.
+
+Die Muster können gemeinsam auftreten. Sie beschreiben die Daten, keine nachgewiesenen Ursachen.';
+$string['ushapeoriginadvice_divergence'] = 'Studierende, die bis dahin mitgekommen sind, fallen ab dieser Aktivität zurück. Prüfe, ob dieses Thema auf noch nicht gesichertem früherem Stoff aufbaut, und erwäge Wiederholung, ausgearbeitete Beispiele oder einen Zwischencheck davor.';
+$string['ushapeoriginadvice_fromstart'] = 'Die Gruppen unterscheiden sich schon zu Beginn: Vorwissen, Interesse oder Eingangsvoraussetzungen sind wahrscheinlich relevant. Erwäge eine frühe Diagnoseaufgabe, Brückenmaterial oder differenzierte Einstiegsaufgaben.';
+$string['ushapeoriginadvice_givingup'] = 'Sobald Bestehen rechnerisch nicht mehr möglich ist, sinkt die Beteiligung. Erwäge Möglichkeiten für eine zweite Chance oder eine frühere Warnung vor diesem Zeitpunkt.';
+$string['ushapeoriginadvice_motivation'] = 'Nach Erreichen der Bestehensgrenze sinkt die Beteiligung im Vergleich zu Studierenden, die noch Punkte brauchen. Erwäge Bewertungsregeln, die spätere Themen relevant halten (z. B. Mindestpunkte je Teil, integrative Abschlussaufgabe).';
+$string['ushapeoriginaxisx'] = 'Bewertete Aktivität (nach Frist)';
+$string['ushapeoriginaxisy'] = 'Prozent';
+$string['ushapeoriginchartauc'] = 'Trennung (AUC × 100)';
+$string['ushapeoriginchartfailed'] = 'Bestehen nicht mehr möglich (% der Teilnehmenden)';
+$string['ushapeoriginchartlower'] = 'Untere Gruppe (Median %)';
+$string['ushapeoriginchartpassed'] = 'Bereits bestanden (% der Teilnehmenden)';
+$string['ushapeoriginchartupper'] = 'Obere Gruppe (Median %)';
+$string['ushapeorigincolauc'] = 'Trennung';
+$string['ushapeorigincoldate'] = 'Frist';
+$string['ushapeorigincollower'] = 'Median unten';
+$string['ushapeorigincollowersub'] = 'Abgaben unten';
+$string['ushapeorigincolpassed'] = 'Bereits bestanden';
+$string['ushapeorigincolsection'] = 'Abschnitt';
+$string['ushapeorigincolsubmitted'] = 'Bewertet';
+$string['ushapeorigincolupper'] = 'Median oben';
+$string['ushapeorigincoluppersub'] = 'Abgaben oben';
+$string['ushapeorigindata'] = 'Werte pro Aktivität';
+$string['ushapeorigindetail_activity'] = 'Kursaktivität danach: {$a->own} % (noch offen: {$a->control} %); relativer Unterschied {$a->did} %.';
+$string['ushapeorigindetail_divergence'] = 'Größter Anstieg der Trennung: {$a->jump} (vorher {$a->before}, nachher {$a->after}).';
+$string['ushapeorigindetail_divergence_observed'] = 'Ab „{$a->name}“ ({$a->section}, {$a->date}) steigt die Trennung von {$a->before} auf {$a->after}.';
+$string['ushapeorigindetail_event'] = '{$a->students} Teilnehmende. Abgabequote {$a->before} % → {$a->after} % (zum selben Zeitpunkt noch offen: {$a->cbefore} % → {$a->cafter} %); Unterschied {$a->did} Prozentpunkte.';
+$string['ushapeorigindetail_fromstart'] = 'Trennung in den ersten {$a->items} Aktivitäten: {$a->early} (spätere Aktivitäten: {$a->late}).';
+$string['ushapeorigindetail_recovery'] = 'Studierende unter dem Median, die in der nächsten Aktivität den Median erreichen: {$a->early} % in der ersten Hälfte, {$a->late} % in der zweiten Hälfte.';
+$string['ushapeorigindetail_score'] = 'Punkteveränderung bei abgegebenen Aktivitäten relativ zur Vergleichsgruppe: {$a} Punkte (stark von Regression zur Mitte beeinflusst; nur zur Information).';
+$string['ushapeorigindetail_unknown'] = 'Zu wenige Teilnehmende oder Aktivitäten für dieses Muster.';
+$string['ushapeorigindivergencemark'] = 'Trennung beginnt';
+$string['ushapeorigindueitems'] = 'Bewertete Aktivitäten (fällig)';
+$string['ushapeoriginempty_nogroups'] = 'Das Kursergebnis lässt sich nicht in zwei ausreichend große Gruppen teilen; die ersten beiden Muster werden nicht ausgewertet.';
+$string['ushapeoriginempty_toofewitems'] = 'Es werden mindestens drei bewertete Tests oder Aufgaben mit abgelaufener Frist benötigt.';
+$string['ushapeoriginempty_toofewparticipants'] = 'Zu wenige bewertete Teilnehmende.';
+$string['ushapeorigingroup'] = '{$a->count} (Median {$a->median} %)';
+$string['ushapeoriginintro'] = 'Wann trennen sich die spätere obere und untere Gruppe dieses Kurses: von Beginn an, ab einer bestimmten Aktivität oder nachdem der Kurs rechnerisch bestanden bzw. nicht mehr bestehbar ist?';
+$string['ushapeoriginlower'] = 'Untere Gruppe';
+$string['ushapeoriginnoactivity'] = 'Keine Logdaten vorhanden; es werden nur Abgabequoten verglichen.';
+$string['ushapeoriginnodeadline'] = '{$a} Aktivitäten haben keine Frist und werden nach ihrem Erstellungszeitpunkt eingeordnet.';
+$string['ushapeoriginpass'] = 'Bestehensgrenze';
+$string['ushapeoriginpass_gradebook'] = '{$a} % (Kurssumme)';
+$string['ushapeoriginpass_setting'] = '{$a} % (angenommen, Plugin-Einstellung)';
+$string['ushapeoriginpattern_divergence'] = 'Trennung ab einer bestimmten Aktivität';
+$string['ushapeoriginpattern_fromstart'] = 'Von Beginn an getrennt';
+$string['ushapeoriginpattern_givingup'] = 'Veränderung, wenn Bestehen nicht mehr möglich ist';
+$string['ushapeoriginpattern_motivation'] = 'Veränderung nach rechnerischem Bestehen';
+$string['ushapeoriginpending'] = '{$a} noch nicht fällige Aktivitäten sind nicht berücksichtigt.';
+$string['ushapeoriginseparation'] = 'Stärke der Zweiteilung (η²)';
+$string['ushapeoriginsplit_no'] = 'Keine deutliche Zweiteilung';
+$string['ushapeoriginsplit_unknown'] = 'Nicht genügend Daten';
+$string['ushapeoriginsplit_yes'] = 'Zweiteilung';
+$string['ushapeoriginstatus_descriptive'] = 'Nur Kennzahlen (in der Validierung nicht von Zufall unterscheidbar)';
+$string['ushapeoriginstatus_notapplicable'] = 'Nicht anwendbar (keine deutliche Zweiteilung)';
+$string['ushapeoriginstatus_notobserved'] = 'Nicht beobachtet';
+$string['ushapeoriginstatus_observed'] = 'Beobachtet';
+$string['ushapeoriginstatus_unknown'] = 'Nicht beurteilbar';
+$string['ushapeoriginungraded'] = '{$a} Aktivitäten mit abgelaufener Frist haben noch keine Bewertungen und werden wie noch nicht fällige behandelt.';
+$string['ushapeoriginupper'] = 'Obere Gruppe';
+$string['ushapeoriginwarning'] = 'Beschreibende Muster, keine nachgewiesenen Ursachen. Die Gruppen werden aus dem Kursergebnis selbst gebildet. Der Bestehenszeitpunkt wird aus den Rohpunkten der Moodle-Tests und -Aufgaben berechnet und kann vom tatsächlichen Beurteilungsschema abweichen (Gewichtungen, Prüfungen außerhalb von Moodle).';
 $string['view'] = 'Analytics anzeigen';

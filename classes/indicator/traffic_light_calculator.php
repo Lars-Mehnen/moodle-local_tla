@@ -24,7 +24,6 @@
 
 namespace local_tla\indicator;
 
-
 /**
  * Calculate descriptive traffic-light states from rates.
  *

@@ -29,7 +29,6 @@ use local_tla\indicator\score_distribution_interpreter;
 use local_tla\repository\course_grade_repository;
 use local_tla\repository\course_dose_response_repository;
 
-
 /**
  * Aggregate the dashboard analyzers into a typed list of findings.
  *

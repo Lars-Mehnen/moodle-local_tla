@@ -30,7 +30,6 @@ use core_external\external_single_structure;
 use core_external\external_multiple_structure;
 use core_external\external_value;
 
-
 /**
  * Return the machine-readable course quality report for a course.
  *

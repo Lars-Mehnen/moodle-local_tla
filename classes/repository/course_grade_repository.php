@@ -27,7 +27,6 @@ namespace local_tla\repository;
 use local_tla\indicator\score_distribution_analyzer;
 use local_tla\indicator\attempt_progress_analyzer;
 
-
 /**
  * Read-only access to gradebook-based score distributions.
  *

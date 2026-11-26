@@ -24,7 +24,6 @@
 
 namespace local_tla\statistics;
 
-
 /**
  * Descriptive statistics class for local_tla plugin.
  */

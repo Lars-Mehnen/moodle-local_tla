@@ -25,7 +25,6 @@
 
 namespace local_tla\tests;
 
-
 /** Test fixtures only. Never loaded by dashboard or external functions. */
 final class assessment_design_cases {
     /**

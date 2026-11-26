@@ -24,7 +24,6 @@
 
 namespace local_tla\local;
 
-
 /**
  * Central access check for the course dashboard.
  *

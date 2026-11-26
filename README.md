@@ -53,6 +53,13 @@ report validates course context and requires `local/tla:view` too.
   before any grades exist. Checks complete-attempt grading, standard quiz-review
   display windows, assignment reopening, planned feedback/cut-off conflicts and
   the presence of overrides, extensions/locks and availability restrictions.
+- **Origin of a two-group result (U-shape)**: splits the course result into a
+  later upper and lower group and checks *when* they separate: from the start
+  (prior knowledge/interest), from a certain activity on (students lost there),
+  after passing is arithmetically secured (motivation drop) or after passing has
+  become impossible (giving up). Rank-based, leave-one-out separation per activity;
+  difference-in-differences against participants whose outcome is still open.
+  See `docs/LECTURER_GUIDE.md`.
 - The same assessment-design and score-interpretation services serve the
   dashboard and external report. Recommendations carry their scope and limits.
 
@@ -110,6 +117,7 @@ Database-free developer checks (does not load Moodle or create records):
 
 ```bash
 php public/local/tla/tests/standalone/assessment_design_check.php
+php public/local/tla/tests/standalone/ushape_origin_check.php
 ```
 
 In a dedicated Moodle PHPUnit environment (project root containing `vendor/`):

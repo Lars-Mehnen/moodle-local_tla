@@ -266,4 +266,75 @@ $string['trafficlight_yellow'] = 'Yellow';
 $string['trafficlightminimum'] = 'At least {$a} submitted assignments are required for an assessment.';
 $string['unresolveddeadlines'] = 'Unresolved deadlines';
 $string['useroverrides'] = 'User overrides';
+$string['ushape_pass_share'] = 'U-shape analysis: fallback pass share';
+$string['ushape_pass_share_desc'] = 'Share of all points (0–1) used as pass threshold when the course total has no "Grade to pass". Default 0.5.';
+$string['ushapeorigin'] = 'Origin of a two-group result (U-shape)';
+$string['ushapeorigin_help'] = 'The course result (points of all graded quizzes and assignments with a past deadline) is split into a later upper and lower group. For every activity, in deadline order, the separation between both groups is measured as a rank statistic (AUC: 0.5 = no difference, 1 = every member of the upper group is better than every member of the lower group). Because ranks are used per activity, differing difficulty does not create a separation by itself.
+
+Four patterns are checked:
+* Separated from the start: the groups already differ clearly in the first activities (prior knowledge, interest).
+* Separation from a certain activity: the groups are close at first and separate from one activity on (students are lost at that point, possibly due to dependency on earlier material).
+* Change after passing: once a student has reached the pass threshold arithmetically, their submission rate or course activity is compared before and after that moment with the change of students whose outcome is still open at the same moment.
+* Change when passing is no longer possible: the same comparison after passing has become arithmetically impossible.
+
+The patterns can occur together. They describe the data, not proven causes.';
+$string['ushapeoriginadvice_divergence'] = 'Students who kept up until then fall behind from this activity on. Check whether this topic depends on earlier material that was not yet secured, and consider repetition, worked examples or a checkpoint before it.';
+$string['ushapeoriginadvice_fromstart'] = 'The groups already differ at the beginning: prior knowledge, interest or entry requirements are likely relevant. Consider an early diagnostic task, bridging material or differentiated entry tasks.';
+$string['ushapeoriginadvice_givingup'] = 'Once passing became arithmetically impossible, participation drops. Consider second-chance options or an earlier warning before this point.';
+$string['ushapeoriginadvice_motivation'] = 'After reaching the pass threshold, participation drops compared with students who still need points. Consider grading rules that keep later topics relevant (e.g. minimum per part, integrative final task).';
+$string['ushapeoriginaxisx'] = 'Graded activity (by deadline)';
+$string['ushapeoriginaxisy'] = 'Percent';
+$string['ushapeoriginchartauc'] = 'Separation (AUC × 100)';
+$string['ushapeoriginchartfailed'] = 'Can no longer pass (% of participants)';
+$string['ushapeoriginchartlower'] = 'Lower group (median %)';
+$string['ushapeoriginchartpassed'] = 'Already passed (% of participants)';
+$string['ushapeoriginchartupper'] = 'Upper group (median %)';
+$string['ushapeorigincolauc'] = 'Separation';
+$string['ushapeorigincoldate'] = 'Deadline';
+$string['ushapeorigincollower'] = 'Lower median';
+$string['ushapeorigincollowersub'] = 'Lower submitted';
+$string['ushapeorigincolpassed'] = 'Already passed';
+$string['ushapeorigincolsection'] = 'Section';
+$string['ushapeorigincolsubmitted'] = 'Graded';
+$string['ushapeorigincolupper'] = 'Upper median';
+$string['ushapeorigincoluppersub'] = 'Upper submitted';
+$string['ushapeorigindata'] = 'Values per activity';
+$string['ushapeorigindetail_activity'] = 'Course activity afterwards: {$a->own}% (still open: {$a->control}%); relative difference {$a->did}%.';
+$string['ushapeorigindetail_divergence'] = 'Largest increase in separation: {$a->jump} (before {$a->before}, after {$a->after}).';
+$string['ushapeorigindetail_divergence_observed'] = 'From "{$a->name}" ({$a->section}, {$a->date}) on, the separation rises from {$a->before} to {$a->after}.';
+$string['ushapeorigindetail_event'] = '{$a->students} participants. Submission rate {$a->before}% → {$a->after}% (still open at the same moment: {$a->cbefore}% → {$a->cafter}%); difference {$a->did} percentage points.';
+$string['ushapeorigindetail_fromstart'] = 'Separation in the first {$a->items} activities: {$a->early} (later activities: {$a->late}).';
+$string['ushapeorigindetail_recovery'] = 'Below-median students who reach the median in the next activity: {$a->early}% in the first half, {$a->late}% in the second half.';
+$string['ushapeorigindetail_score'] = 'Score change on submitted activities relative to the comparison group: {$a} points (strongly affected by regression to the mean; for information only).';
+$string['ushapeorigindetail_unknown'] = 'Not enough participants or activities for this pattern.';
+$string['ushapeorigindivergencemark'] = 'separation starts';
+$string['ushapeorigindueitems'] = 'Graded activities (due)';
+$string['ushapeoriginempty_nogroups'] = 'The course result cannot be split into two sufficiently large groups; the first two patterns are not evaluated.';
+$string['ushapeoriginempty_toofewitems'] = 'At least three graded quizzes or assignments with a past deadline are needed.';
+$string['ushapeoriginempty_toofewparticipants'] = 'Not enough graded participants.';
+$string['ushapeorigingroup'] = '{$a->count} (median {$a->median}%)';
+$string['ushapeoriginintro'] = 'When do the later upper and lower group of this course separate: from the start, from a certain activity on, or after the course has been passed or can no longer be passed arithmetically?';
+$string['ushapeoriginlower'] = 'Lower group';
+$string['ushapeoriginnoactivity'] = 'No log data available; only submission rates are compared.';
+$string['ushapeoriginnodeadline'] = '{$a} activities have no deadline and are ordered by their creation time.';
+$string['ushapeoriginpass'] = 'Pass threshold';
+$string['ushapeoriginpass_gradebook'] = '{$a}% (course total)';
+$string['ushapeoriginpass_setting'] = '{$a}% (assumed, plugin setting)';
+$string['ushapeoriginpattern_divergence'] = 'Separation from a certain activity';
+$string['ushapeoriginpattern_fromstart'] = 'Separated from the start';
+$string['ushapeoriginpattern_givingup'] = 'Change when passing is no longer possible';
+$string['ushapeoriginpattern_motivation'] = 'Change after the course is passed';
+$string['ushapeoriginpending'] = '{$a} activities that are not yet due are not included.';
+$string['ushapeoriginseparation'] = 'Two-group strength (η²)';
+$string['ushapeoriginsplit_no'] = 'No clear two-group split';
+$string['ushapeoriginsplit_unknown'] = 'Not enough data';
+$string['ushapeoriginsplit_yes'] = 'Two groups';
+$string['ushapeoriginstatus_descriptive'] = 'Figures only (not distinguishable from chance in validation)';
+$string['ushapeoriginstatus_notapplicable'] = 'Not applicable (no pronounced two-group split)';
+$string['ushapeoriginstatus_notobserved'] = 'Not observed';
+$string['ushapeoriginstatus_observed'] = 'Observed';
+$string['ushapeoriginstatus_unknown'] = 'Not assessable';
+$string['ushapeoriginungraded'] = '{$a} activities past their deadline have no grades yet and are treated as not yet due.';
+$string['ushapeoriginupper'] = 'Upper group';
+$string['ushapeoriginwarning'] = 'Descriptive patterns, not proven causes. The groups are formed from the course result itself. The pass moment is computed from the raw points of quizzes and assignments in Moodle and can differ from the actual grading scheme (weights, exams outside Moodle).';
 $string['view'] = 'View analytics';

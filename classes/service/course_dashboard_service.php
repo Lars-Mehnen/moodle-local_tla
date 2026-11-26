@@ -31,7 +31,6 @@ use local_tla\repository\quiz_progress_repository;
 use local_tla\repository\course_ushape_origin_repository;
 use local_tla\indicator\score_distribution_interpreter;
 
-
 /**
  * Assemble read-only course dashboard data.
  *

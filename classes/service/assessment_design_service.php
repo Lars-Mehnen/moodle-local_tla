@@ -27,7 +27,6 @@ namespace local_tla\service;
 use local_tla\indicator\assessment_design_analyzer;
 use local_tla\repository\assessment_design_repository;
 
-
 /**
  * Configuration-only analysis service, with no student-observation threshold.
  */

@@ -24,7 +24,6 @@
 
 namespace local_tla\forecast;
 
-
 /**
  * Forecaster class for local_tla plugin.
  */

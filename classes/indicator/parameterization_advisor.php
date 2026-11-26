@@ -24,7 +24,6 @@
 
 namespace local_tla\indicator;
 
-
 /**
  * Recommend how much per-student randomization a quiz needs.
  *

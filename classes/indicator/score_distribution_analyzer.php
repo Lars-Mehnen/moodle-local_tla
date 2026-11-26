@@ -26,7 +26,6 @@ namespace local_tla\indicator;
 
 use local_tla\statistics\descriptive;
 
-
 /**
  * Classify the shape of a graded activity's score distribution.
  *

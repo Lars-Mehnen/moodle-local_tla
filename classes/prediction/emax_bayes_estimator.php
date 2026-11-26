@@ -26,7 +26,6 @@ namespace local_tla\prediction;
 
 use local_tla\statistics\descriptive;
 
-
 /**
  * Fit a Bayesian Emax model E = Emax * C / (EC50 + C) + Normal(0, sigma).
  *

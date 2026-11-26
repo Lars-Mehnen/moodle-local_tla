@@ -24,7 +24,6 @@
 
 namespace local_tla\privacy;
 
-
 /**
  * Privacy provider for local_tla.
  *

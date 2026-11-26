@@ -24,7 +24,6 @@
 
 namespace local_tla;
 
-
 /**
  * Tests for lang_strings_test.
  *

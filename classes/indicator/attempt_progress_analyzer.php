@@ -26,7 +26,6 @@ namespace local_tla\indicator;
 
 use local_tla\statistics\descriptive;
 
-
 /**
  * Classify how a cohort's results change between a first and a later result.
  *

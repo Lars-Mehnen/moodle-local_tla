@@ -26,7 +26,6 @@ namespace local_tla\repository;
 
 use local_tla\prediction\emax_bayes_estimator;
 
-
 /**
  * Build the course-wide learning dose-response and fit a Bayesian Emax model.
  *

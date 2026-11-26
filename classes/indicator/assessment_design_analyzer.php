@@ -24,7 +24,6 @@
 
 namespace local_tla\indicator;
 
-
 /**
  * Deterministic, database-free rules. No simulations and no grade changes.
  *

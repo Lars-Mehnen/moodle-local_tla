@@ -24,7 +24,6 @@
 
 namespace local_tla\assignment;
 
-
 /**
  * Resolves the effective deadline for a single individual assignment submission
  * and classifies it as on time, late, without a due date, or unresolved.
